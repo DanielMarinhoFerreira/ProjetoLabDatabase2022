@@ -22,7 +22,7 @@ class OracleQueries: # Class que realizar conexão com banco
         self.service_name = 'XEPDB1'
 
         
-        with open("conexion/passphrase/authentication.oracle", "r") as f:
+        with open("src/connection/passphrase/authentication.oracle", "r") as f:
             self.user, self.passwd = f.read().split(',')    
 
     def __del__(self):
