@@ -1,27 +1,68 @@
 ############################################################
 #Programa model.Fundos
 #AUTOR.......: Daniel Marinho 
-#DATA........: 18/10/2022
+#DATA........: 18/10/2022 as 24/09/2023
 #DESCRICAO...: class Fundo  
 ############################################################
 
-class Fundo:
+class Fundos:
+    """
+    class de Obj fundos:
+    
+    """
 
-    def __init__(self, nome:str=None, segmento:str=None, ticker:str=None) -> None:
-        self.set_Ticker(ticker)        
-        self.set_Nome(nome)
-
+    def __init__(self, ticker:str, tipo_abbima:str, segmento:str, conta_emit:int, razao_social:str, cnpj:int, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin:int) -> None:
+        self.ticker = ticker        
+        self.tipo_abbima = tipo_abbima
+        self.segmento = segmento
+        self.conta_emit:int = conta_emit
+        self.razao_social = razao_social
+        self.cnpj:int = cnpj
+        self.nome_pregao = nome_pregao
+        self.prazo_doracao = prazo_doracao
+        self.tipo_gestao:str = tipo_gestao
+        self.cnpj_admin:int = cnpj_admin
+        
+        
+    def set_insert(self):
+        return f'''
+                insert into Fundos values ('{self.get_Ticker}', 
+                                        '{self.get_tipo_abbima}',
+                                        '{self.get_segmento}',
+                                        '{self.get_razao_social}'
+                                        '{self.get_cnpj}'
+                                        '{self.get_nome_pregao}'
+                                        '{self.get_prazo_doracao}'
+                                        '{self.get_tipo_gestao}'
+                                        '{self.get_cnpl_admin}')")
+                '''
+        
     def get_Ticker(self):
         return self.ticker
 
-    def get_Nome(self):
-        return self.nome
+    def get_tipo_abbima(self):
+        return self.tipo_abbima
+    
+    def get_segmento(self):
+        return self.segmento
+    
+    def get_conta_emit(self):
+        return self.conta_emit
+    
+    def get_razao_social(self):
+        return self.razao_social
+    
+    def get_cnpj(self):
+        return self.cnpj
+    
+    def get_nome_pregao(self):
+        return self.nome_pregao
 
-    def set_Ticker(self, ticker):
-        self.ticker = ticker
-
-    def set_Nome(self, nome):
-        self.nome = nome
-
-    def toString(self):
-        return f'Nome:{self.nome} Segmento:{self.segmento}' 
+    def get_prazo_doracao(self):
+        return self.prazo_doracao
+    
+    def get_tipo_gestao(self):
+        return self.tipo_gestao
+    
+    def get_cnpl_admin(self):
+        return self.cnpj_admin

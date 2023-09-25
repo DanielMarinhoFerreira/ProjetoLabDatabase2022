@@ -1,24 +1,25 @@
-import datetime
+from datetime import time
 from model.fundos import Fundo
 
 ############################################################
 #Programa model.Cotacoes
 #AUTOR.......: Daniel Marinho 
-#DATA........: 18/10/2022
+#DATA........: 18/10/2022 24/09/2023
 #DESCRICAO...: class Cotacao  
 ############################################################
 
-class Cotacao():
+class Cotacoes():
 
-    def __init__(self, abertura:int=None, fechamento:int=None, 
-                       minimo:int=None, maximo:int=None, volume_cotas:int=None, mes:datetime=None, fundo:Fundo=None)  -> None:
-        self.set_Fundo(fundo) # class Fundos
-        self.set_Abertura(abertura)
-        self.set_Fechamento(fechamento) 
-        self.set_Minimo(minimo) 
-        self.set_Maximo(maximo)
-        self.set_Volume_Cotas(volume_cotas)
-        self.set_Mes(mes)
+    def __init__(self, ticker:str, Data:str, Cota_Atual:int, fechamento:int, 
+                       cota_minimo:int, cota_maximo:int, valorizacao:int, mes:time, rendimento_atual:str)  -> None:
+        self._ticker = ticker
+        self._Data = Data
+        self._Cota_Atual = Cota_Atual
+        self._cota_minimo = cota_minimo
+        self._cota_maximo = cota_maximo
+        self._valorizacao = valorizacao
+        self._mes:time = mes
+        self._rendimento_atual = rendimento_atual
 
 
     def get_Abertura(self) -> int:
