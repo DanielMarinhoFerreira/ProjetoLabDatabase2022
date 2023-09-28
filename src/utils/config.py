@@ -8,19 +8,17 @@ MENU_PRINCIPAL = """Menu Principal
 
 MENU_RELATORIOS = """Relatórios
 1 - Relatório de Fundos
-2 - Relatório de Empreendimentos
-3 - Relatório de Cotações Gerais
+2 - Relatório de Administradores
 4 - Relatório de Cotações Por Fundos 
-5 - Relatório de Endereços 
-6 - Relatório de Endereços por Segmentos
+6 - Relatório de Segmentos
 0 - Sair
 """
 
 MENU_ENTIDADES = """Entidades
 1 - FUNDOS 
-2 - EMPREENDIMENTOS
+2 - ADMINISTRADORES
 3 - COTAÇÕES
-4 - ENDEREÇOS
+4 - DIVIDENDOS
 """
 
 def clear_console(wait_time:int=3):

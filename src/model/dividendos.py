@@ -6,7 +6,7 @@
 ############################################################
 
 
-class dividendos:
+class Dividendos:
     
     
     def __init__(self, ticker, data, conta_atual, ult_divid, dy_ult_div, div_acao, div_yield):

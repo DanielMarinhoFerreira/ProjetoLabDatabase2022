@@ -66,3 +66,6 @@ class Fundos:
     
     def get_cnpl_admin(self):
         return self.cnpj_admin
+    
+    def set_cnpl_admin(self, cnpj):
+        self.cnpj_admin = cnpj
