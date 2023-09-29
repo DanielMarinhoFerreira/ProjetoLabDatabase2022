@@ -1,11 +1,9 @@
 from model.Fundos import Fundos
-from model.Administradores import Administradores 
-from model.Cotacoes import Cotacoes
-from model.dividendos import Dividendos
 from connection.oracle_queries import OracleQueries
 from time import sleep
 
 class Controller_fundos:
+    
     def __init__(self):
         pass
 
@@ -68,7 +66,7 @@ class Controller_fundos:
         oracle.connect()
 
         # Solicita ao usuário o código do fundo a ser alterado
-        ticker = int(input("informe o ticker do fundo: "))
+        ticker = input("informe o ticker do fundo: ")
 
         # Verifica se o fundo existe na base de dados
         if not self.verifica_existencia(oracle, ticker, tabela='FUNDOS',coluna=['ticker', 'ticker']):
@@ -84,7 +82,31 @@ class Controller_fundos:
             print(f"O ticker do fundos {ticker} não existe.")
             return None
     
-    # Realizar cadastro do fundo 
+    def excluir_fundos(self):
+        # Cria uma nova conexão com o banco que permite alteração
+        oracle = OracleQueries(can_write=True)
+        oracle.connect()
+        
+        # Solicita ao usuário o código do fundo a ser alterado
+        ticker = int(input("informe o ticker do fundo: "))
+        
+        # Verifica se o fundo existe na base de dados
+        if not self.verifica_existencia(oracle, ticker, tabela='FUNDOS',coluna=['ticker', 'ticker']):            
+            # Recupera os dados do novo cliente criado transformando em um DataFrame
+            df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, TIPO_ABBIMA FROM FUNDOS WHERE TICKER ='{ticker}'")
+            
+            # Revome o cliente da tabela
+            '''Tem que verificar em todas as tabela que existe esse fundo para exclui-lo'''
+            oracle.write(f"delete from fundos where ticker = {ticker}")   
+            #oracle.write()
+            
+            # Exibe os atributos do cliente excluído
+            print("Cliente Removido com Sucesso!")
+            print(df_fundo.ticker.values[0], df_fundo.nome.values[0])
+            
+        else:
+            print(f"O ticker do fundo {ticker} não existe.")
+
     def cadastro_fundo(self) -> Fundos:
             ticker = input("Fundos (Novo): ")
             tipo_abbima = input("tipo_abbima (Novo): ")
@@ -107,58 +129,6 @@ class Controller_fundos:
             
             return fundos
     
-    '''Criar class para esses cadastro'''
-    def cadastrar_admin(self) -> Administradores:
-        nome = input("nome (Novo): ")
-        telefone = input("Telefone (Novo): ")
-        email = input("E-mail (Novo): ")
-        site = input("Site (Novo): ")
-        cnpj = input("Cnpj (Novo): ")
-        admin = Administradores(nome=nome, telefone=telefone, email=email, site=site, cnpj=cnpj)
-        return admin
-    
-    def cadastrar_cotacao(self) -> Cotacoes:
-        ticker = input("Ticker (Novo): ")
-        data_cota = input("Data cotação (Novo): ")
-        cota_atual = input("Cotação Atual (Novo): ")
-        rendimento_atual = input("Rendimento (Novo): ")
-        minimo_cota = input("Cota minima (Novo): ")
-        maximo_cota = input("Cota maxima (Novo): ")
-        abertura = input("Abertura (Novo): ")
-        fechamento = input("Ferchamento (Novo): ")
-        volume_cotas = input("Valume Cotas (Novo): ")
-        mes = input("Mês (Novo): ")
-        cotacao = Cotacoes(ticker=ticker, Data=data_cota, Cota_Atual=cota_atual, rendimento_atual=rendimento_atual, cota_minimo=minimo_cota, cota_maximo=maximo_cota, mes=mes)
-        return cotacao 
-    
-    def cadastrar_dividendos() -> Dividendos:
-        
-        return
-    
-    '''Terminar de criar codigo de excluir fundo'''
-    def excluir_fundos(self):
-        # Cria uma nova conexão com o banco que permite alteração
-        oracle = OracleQueries(can_write=True)
-        oracle.connect()
-        
-        # Solicita ao usuário o código do fundo a ser alterado
-        ticker = int(input("informe o ticker do fundo: "))
-        
-        # Verifica se o cliente existe na base de dados
-        if not self.verifica_existencia_fundos(oracle, ticker):            
-            # Recupera os dados do novo cliente criado transformando em um DataFrame
-            df_cliente = oracle.sqlToDataFrame(f"select ticker, nome from fundos where ticker = {ticker}")
-            # Revome o cliente da tabela
-            oracle.write(f"delete from fundos where ticker = {ticker}")   
-            oracle.white(f"delete from empreendimento where = {ticker}")
-            # Cria um novo objeto Cliente para informar que foi removido
-            fundo_excluido = Fundo(df_cliente.ticker.values[0], df_cliente.nome.values[0])
-            # Exibe os atributos do cliente excluído
-            print("Cliente Removido com Sucesso!")
-            print(fundo_excluido.toString())
-        else:
-            print(f"O ticker do fundo {ticker} não existe.")
-
     def verifica_existencia(self, oracle:OracleQueries, valor:str=None, tabela:str=None, coluna:list=None) -> bool:
         '''
             Recupera os dados de uma tabela.
@@ -180,3 +150,5 @@ class Controller_fundos:
                                            "
                                            ''')
         return df_cliente.empty
+    
+    
