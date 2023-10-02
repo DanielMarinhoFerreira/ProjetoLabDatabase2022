@@ -79,7 +79,8 @@ class Controller_Cotacoes():
         while mes =='':
             mes = input("Mês (Novo): ")
             
-        cotacao = Cotacoes(ticker=ticker, Data=data_cota, Cota_Atual=cota_atual, rendimento_atual=rendimento_atual, cota_minimo=minimo_cota, cota_maximo=maximo_cota, mes=mes)
+        cotacao = Cotacoes(ticker=ticker, Data=data_cota, Cota_Atual=cota_atual, rendimento_atual=rendimento_atual, 
+                           cota_minimo=minimo_cota, cota_maximo=maximo_cota, mes=mes, fechamento=fechamento, abertura=abertura, volume_cotas=volume_cotas )
         return cotacao 
     
     def verifica_existencia(self, oracle:OracleQueries, valor:list=None, tabela:str=None, coluna:list=None) -> bool:
