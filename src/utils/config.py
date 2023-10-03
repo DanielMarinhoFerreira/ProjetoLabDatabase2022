@@ -9,9 +9,10 @@ MENU_PRINCIPAL = """Menu Principal
 MENU_RELATORIOS = """Relatórios
 1 - Relatório de Fundos
 2 - Relatório de Administradores
-4 - Relatório de Cotações Por Fundos 
-6 - Relatório de Segmentos
-0 - Sair
+3 - Relatório de Cotações Por Fundos 
+4 - Relatório de Segmentos
+5 - Relatório de Dividendos
+6 - Sair
 """
 
 MENU_ENTIDADES = """Entidades

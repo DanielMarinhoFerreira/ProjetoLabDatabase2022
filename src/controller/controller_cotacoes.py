@@ -76,7 +76,7 @@ class Controller_Cotacoes():
         fechamento = input("Ferchamento (Novo): ")
         volume_cotas = input("Valume Cotas (Novo): ")
         
-        while mes =='':
+        while mes =='' and mes.isdecimal:
             mes = input("Mês (Novo): ")
             
         cotacao = Cotacoes(ticker=ticker, Data=data_cota, Cota_Atual=cota_atual, rendimento_atual=rendimento_atual, 

@@ -2,7 +2,7 @@
 # Author: Howard Roatti
 # Created: 02/09/2022
 # Last Update: 03/09/2022
-#
+#py -m venv env
 # Essa classe auxilia na conexão com o Banco de Dados Oracle
 # Documentação base: 
 #                  (1) https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
@@ -20,6 +20,7 @@ class OracleQueries: # Class que realizar conexão com banco
         self.host = "localhost"
         self.port = 1521
         self.service_name = 'XEPDB1'
+        self.sid = 'XE'
 
         
         with open("src/connection/passphrase/authentication.oracle", "r") as f:
@@ -29,7 +30,7 @@ class OracleQueries: # Class que realizar conexão com banco
         if self.cur:
             self.close()
 
-    def connectionString(self):
+    def connectionString(self, in_container:bool=False):
         '''
         Esse método cria uma string de conexão utilizando os parâmetros necessários
         Parameters:
@@ -38,10 +39,17 @@ class OracleQueries: # Class que realizar conexão com banco
         - service_name: nome do serviço criado para o banco de dados Oracle
         return: string de conexão
         '''
-        string_connection = cx_Oracle.makedsn(host=self.host,
-                                              port=self.port,
-                                              service_name=self.service_name
-                                             )
+        if not in_container:
+            string_connection = cx_Oracle.makedsn(host=self.host,
+                                                port=self.port,
+                                                service_name=self.sid
+                                                )
+        elif in_container:
+            string_connection = cx_Oracle.makedsn(host=self.host,
+                                                port=self.port,
+                                                service_name=self.service_name
+                                                )
+        
         return string_connection
 
     def connect(self):
@@ -57,7 +65,7 @@ class OracleQueries: # Class que realizar conexão com banco
 
         self.conn = cx_Oracle.connect(user=self.user,
                                       password=self.passwd,                                     
-                                      dsn=self.connectionString()
+                                      dsn=self.connectionString(in_container=True)
                                      )
         self.cur = self.conn.cursor()
         return self.cur
@@ -67,7 +75,7 @@ class OracleQueries: # Class que realizar conexão com banco
         Esse método irá executar uma query
         Parameters:
         - query: consulta utilizada para recuperação dos dados
-        return: um DataFrame da biblioteca Pandas
+        return: um DataFrame da bibliotec4a Pandas
         '''
         self.cur.execute(query)
         rows = self.cur.fetchall()

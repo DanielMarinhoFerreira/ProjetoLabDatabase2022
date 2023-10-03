@@ -1,6 +1,7 @@
 from utils import config
 from utils.splash_screen import SplashScreen
 from reports.relatorios import Relatorio
+from time import sleep
 
 
 tela_inicial = SplashScreen()
@@ -15,18 +16,18 @@ ctrl_item_pedido =
 def reports(opcao_relatorio:int=0):
 
     if opcao_relatorio == 1:
-        relatorio.get_relatorio_pedidos_por_fornecedor()            
+        relatorio.get_relatorio('Relatorio_fundos.sql')       
+        sleep(5)     
     elif opcao_relatorio == 2:
-        relatorio.get_relatorio_pedidos()
+        relatorio.get_relatorio('Relatorio_fundos_adm.sql')
+        sleep(5)
     elif opcao_relatorio == 3:
-        relatorio.get_relatorio_produtos()
+        relatorio.get_relatorio('Relatorio_Cotacoes_por_fundos.sql')
     elif opcao_relatorio == 4:
-        relatorio.get_relatorio_clientes()
+        relatorio.get_relatorio('Relatorio_de_Segmentos.sql')
     elif opcao_relatorio == 5:
-        relatorio.get_relatorio_fornecedores()
-    elif opcao_relatorio == 6:
-        relatorio.get_relatorio_itens_pedidos()
-
+        relatorio.get_relatorio('Rolatorio_dividendos.sql')
+        
 '''
 def inserir(opcao_inserir:int=0):
 
@@ -40,7 +41,7 @@ def excluir(opcao_excluir:int=0):
 
 def run():
     print(tela_inicial.get_updated_screen())
-    config.clear_console()
+    #config.clear_console()
 
     while True:
         print(config.MENU_PRINCIPAL)
