@@ -1,8 +1,8 @@
-from model.Fundos import Fundos
+from model.fundos import Fundos
 from connection.oracle_queries import OracleQueries
 from time import sleep
 
-class Controller_fundos:
+class Controller_Fundos:
     
     def __init__(self):
         pass

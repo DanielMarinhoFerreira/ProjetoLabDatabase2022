@@ -1,5 +1,5 @@
 from datetime import time
-from model.fundos import Fundo
+from model.fundos import Fundos
 
 ############################################################
 #Programa model.Cotacoes
@@ -9,6 +9,7 @@ from model.fundos import Fundo
 ############################################################
 
 class Cotacoes():
+
 
     def __init__(self, ticker:str, Data:str, Cota_Atual:int, fechamento:int, abertura:int,volume_cotas:int, 
                        cota_minimo:int, cota_maximo:int, valorizacao:int, mes:time, rendimento_atual:str)  -> None:

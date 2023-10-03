@@ -1,18 +1,20 @@
-from utils import config
 from utils.splash_screen import SplashScreen
 from reports.relatorios import Relatorio
+from controller.controller_admin import Controller_Admin
+from controller.controller_cotacoes import Controller_Cotacoes
+from controller.controller_dividendos import Controller_Dividendos
+from controller.controller_fundos import Controller_Fundos
 from time import sleep
+from utils import config
 
 
 tela_inicial = SplashScreen()
 relatorio = Relatorio()
-'''
-ctrl_produto = 
-ctrl_cliente = 
-ctrl_fornecedor = 
-ctrl_pedido = 
-ctrl_item_pedido = 
-'''
+ctrl_admin = Controller_Admin()
+ctrl_contacoes = Controller_Cotacoes()
+ctrl_dividendos = Controller_Dividendos()
+ctrl_fundos = Controller_Fundos()
+
 def reports(opcao_relatorio:int=0):
 
     if opcao_relatorio == 1:
@@ -23,25 +25,32 @@ def reports(opcao_relatorio:int=0):
         sleep(5)
     elif opcao_relatorio == 3:
         relatorio.get_relatorio('Relatorio_Cotacoes_por_fundos.sql')
+        sleep(5)
     elif opcao_relatorio == 4:
         relatorio.get_relatorio('Relatorio_de_Segmentos.sql')
+        sleep(5)
     elif opcao_relatorio == 5:
         relatorio.get_relatorio('Rolatorio_dividendos.sql')
+        sleep(5)
         
-'''
 def inserir(opcao_inserir:int=0):
+    if opcao_inserir == 1:
+        ctrl_fundos.inserir_fundos()
 
 
 def atualizar(opcao_atualizar:int=0):
-
+    if opcao_atualizar == 1:
+        ctrl_fundos.atualizar_fundos()
 
 
 def excluir(opcao_excluir:int=0):
-'''
+    if  opcao_excluir == 1:
+        ctrl_fundos.excluir_fundos()
+
 
 def run():
     print(tela_inicial.get_updated_screen())
-    #config.clear_console()
+    config.clear_console()
 
     while True:
         print(config.MENU_PRINCIPAL)
@@ -64,7 +73,7 @@ def run():
             opcao_inserir = int(input("Escolha uma opção [1-5]: "))
             config.clear_console(1)
 
-            #inserir(opcao_inserir=opcao_inserir)
+            inserir(opcao_inserir=opcao_inserir)
 
             config.clear_console()
             print(tela_inicial.get_updated_screen())

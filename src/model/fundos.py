@@ -6,11 +6,8 @@
 ############################################################
 
 class Fundos:
-    """
-    class de Obj fundos:
     
-    """
-
+    
     def __init__(self, ticker:str, tipo_abbima:str, segmento:str, conta_emit:int, razao_social:str, cnpj:int, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin:int) -> None:
         self.ticker = ticker        
         self.tipo_abbima = tipo_abbima
