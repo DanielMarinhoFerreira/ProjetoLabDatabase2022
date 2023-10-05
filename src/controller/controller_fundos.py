@@ -104,7 +104,7 @@ class Controller_Fundos:
             
             # Exibe os atributos do cliente excluído
             print("Cliente Removido com Sucesso!")
-            print(df_fundo.ticker.values[0], df_fundo.nome.values[0])
+            print(df_fundo.ticker.values[0], df_fundo.segmento.values[0])
             
         else:
             print(f"O ticker do fundo {ticker} não existe.")
