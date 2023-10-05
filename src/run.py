@@ -34,18 +34,50 @@ def reports(opcao_relatorio:int=0):
         sleep(5)
         
 def inserir(opcao_inserir:int=0):
+    
     if opcao_inserir == 1:
         ctrl_fundos.inserir_fundos()
-
+        sleep(5)
+    elif opcao_inserir == 2:
+        ctrl_admin.inserir_admin()
+        sleep(5)
+    elif opcao_inserir == 3:
+        ctrl_contacoes.inserir_cotacoes()
+        sleep(5)
+    elif opcao_inserir == 4:
+        ctrl_dividendos.inserir_Dividendos()
+        sleep(5)
 
 def atualizar(opcao_atualizar:int=0):
+    
     if opcao_atualizar == 1:
         ctrl_fundos.atualizar_fundos()
+        sleep(5)
+    elif opcao_atualizar == 2:
+        ctrl_admin.atualizar_admin()
+        sleep(5)
+    elif opcao_atualizar == 3:
+        ctrl_contacoes.atualizar_cotacoes()
+        sleep(5)
+    elif opcao_atualizar == 4:
+        ctrl_dividendos.atualizar_Dividendos()
+        sleep(5)
 
 
 def excluir(opcao_excluir:int=0):
-    if  opcao_excluir == 1:
+    
+    if opcao_excluir == 1:
         ctrl_fundos.excluir_fundos()
+        sleep(5)
+    elif opcao_excluir == 2:
+        ctrl_admin.deletar_admin()
+        sleep(5)
+    elif opcao_excluir == 3:
+        ctrl_contacoes.deletar_cotacoes()
+        sleep(5)
+    elif opcao_excluir == 4:
+        ctrl_dividendos.deletar_Dividendos()
+        sleep(5)
 
 
 def run():
@@ -85,7 +117,7 @@ def run():
             opcao_atualizar = int(input("Escolha uma opção [1-5]: "))
             config.clear_console(1)
 
-            #atualizar(opcao_atualizar=opcao_atualizar)
+            atualizar(opcao_atualizar=opcao_atualizar)
 
             config.clear_console()
 
@@ -95,7 +127,7 @@ def run():
             opcao_excluir = int(input("Escolha uma opção [1-5]: "))
             config.clear_console(1)
 
-            #excluir(opcao_excluir=opcao_excluir)
+            excluir(opcao_excluir=opcao_excluir)
 
             config.clear_console()
             print(tela_inicial.get_updated_screen())

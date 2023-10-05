@@ -16,7 +16,8 @@ class Controller_Fundos:
         oracle.connect()
         
         # Solicita ao usuario o cadastro do Fundo
-        fundo = self.cadastro_fundo()
+        #fundo = self.cadastro_fundo()
+        fundo = self.cadastro_fundo_teste()
 
         if self.verifica_existencia(oracle, fundo.get_Ticker(), tabela='FUNDOS',coluna=['ticker', 'ticker']): #Verificar se exista no banco na tabela fondos 
             
@@ -25,8 +26,8 @@ class Controller_Fundos:
                 oracle.write(fundo.set_insert())
                 
                 # Recupera os dados do novo ticker criado transformando em um DataFrame
-                df_fundo = oracle.sqlToDataFrame(f"select ticker, nome from ticker where ticker = '{fundo.get_Ticker()}'")
-                print(df_fundo.ticker.values[0], df_fundo.nome.values[0])
+                df_fundo = oracle.sqlToDataFrame(f"select ticker, TIPO_ABBIMA from FUNDOS where ticker = '{fundo.get_Ticker()}'")
+                print("Ticker: "+ df_fundo.ticker.values[0] +" : "+ df_fundo.tipo_abbima.values[0] +" Cadastrdo !")
             else:
                 contin = input("Administrador não cadastrado, deseja cadastrar administrador ? Digite S ou N")
                 
@@ -77,11 +78,12 @@ class Controller_Fundos:
             # Recupera os dados do novo cliente criado transformando em um DataFrame
             df_fundos = oracle.sqlToDataFrame(f" SELECT TICKER, SEGMENTO FROM FUNDOS WHERE TICKER = '{ticker}'")
             # Cria um novo objeto cliente
-            print(df_fundos.ticker.values[0], df_fundos.nome.values[0])
+            print(df_fundos.ticker.values[0], df_fundos.segmento.values[0])
+            ticker.__delattr__
         else:
-            print(f"O ticker do fundos {ticker} não existe.")
+            print(f"O ticker {ticker} informado não existe.")
             return None
-    
+    '''Falta fazer '''
     def excluir_fundos(self):
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
@@ -107,11 +109,30 @@ class Controller_Fundos:
         else:
             print(f"O ticker do fundo {ticker} não existe.")
 
+    def cadastro_fundo_teste(sekf) ->Fundos:
+        ticker = 'HGFF11'
+        tipo_abbima = 'HIBRIDO'
+        segmento = 'papel'
+        conta_emit = 300000
+        num_cotas = 300000
+        razao_social = 'TESTE'
+        cnpj = '32784989000122'
+        nome_pregao = 'FIAGRO SUNO'
+        prazo_doracao = 'Indeterminado'
+        tipo_gestao = 'Ativa'
+        cnpj_admin = '806535000154'
+        
+        fundos = Fundos(ticker=ticker, tipo_abbima=tipo_abbima, segmento=segmento, conta_emit=conta_emit,num_cotas=num_cotas ,razao_social=razao_social, cnpj=cnpj, 
+                                nome_pregao= nome_pregao, prazo_doracao=prazo_doracao, tipo_gestao=tipo_gestao, cnpj_admin=cnpj_admin)
+            
+        return fundos
+    
     def cadastro_fundo(self) -> Fundos:
             ticker = input("Fundos (Novo): ")
             tipo_abbima = input("tipo_abbima (Novo): ")
             segmento = input("segmento (Novo): ")
             conta_emit = input("conta emitidas (Novo): ")
+            num_cotas = input("Numero de conta (Novo): ")
             razao_social = input("razão social (Novo): ")
             
             sleep(1) #ms
@@ -124,7 +145,7 @@ class Controller_Fundos:
             tipo_gestao = input("tipo gestao (Novo): ")
             cnpj_admin = input("cnpj administrador do fundo (Novo): ")
             
-            fundos = Fundos(ticker=ticker, tipo_abbima=tipo_abbima, segmento=segmento, conta_emit=conta_emit, razao_social=razao_social, cnpj=cnpj, 
+            fundos = Fundos(ticker=ticker, tipo_abbima=tipo_abbima, segmento=segmento, conta_emit=conta_emit,num_cotas=num_cotas,razao_social=razao_social, cnpj=cnpj, 
                                 nome_pregao= nome_pregao, prazo_doracao=prazo_doracao, tipo_gestao=tipo_gestao, cnpj_admin=cnpj_admin)
             
             return fundos
@@ -142,13 +163,7 @@ class Controller_Fundos:
                         where coluna[1] = fundos  
         
         '''
-        df_cliente = oracle.sqlToDataFrame(f'''
-                                           " 
-                                            select {tabela} 
-                                                from {coluna[1]}
-                                            where {coluna[0]} = {valor}
-                                           "
-                                           ''')
+        df_cliente = oracle.sqlToDataFrame(f"""select {coluna[1]} from {tabela} where {coluna[0]} = '{valor}'""")
         return df_cliente.empty
     
     

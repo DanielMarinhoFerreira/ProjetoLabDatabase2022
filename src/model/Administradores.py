@@ -17,13 +17,9 @@ class Administradores:
         
         
     def set_insert(self):
-        return  f'''
-                insert into Fundos values ('{self.get_nome()}', 
-                                        '{self.get_telefone()}',
-                                        '{self.get_email}',
-                                        '{self.get_site}',
-                                        '{self.get_cnpj}
-        '''
+        admin_insert = f'''insert into Fundos values ('{self.get_nome()}','{self.get_telefone()}','{self.get_email}','{self.get_site}','{self.get_cnpj})'''
+        return  admin_insert
+    
     def get_nome(self):
         return self._nome
     

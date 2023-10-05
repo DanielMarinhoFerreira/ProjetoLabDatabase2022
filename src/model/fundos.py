@@ -8,32 +8,26 @@
 class Fundos:
     
     
-    def __init__(self, ticker:str, tipo_abbima:str, segmento:str, conta_emit:int, razao_social:str, cnpj:int, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin:int) -> None:
+    def __init__(self, ticker:str, tipo_abbima:str, segmento:str,num_cotas:int ,conta_emit:int, razao_social:str, cnpj:int, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin:int) -> None:
         self.ticker = ticker        
         self.tipo_abbima = tipo_abbima
         self.segmento = segmento
         self.conta_emit:int = conta_emit
+        self.num_cota = num_cotas
         self.razao_social = razao_social
         self.cnpj:int = cnpj
         self.nome_pregao = nome_pregao
         self.prazo_doracao = prazo_doracao
         self.tipo_gestao:str = tipo_gestao
         self.cnpj_admin:int = cnpj_admin
-        
-        
+    
+    def __delattr__(self) -> None:
+        pass
+
     def set_insert(self):
-        return f'''
-                insert into Fundos values ('{self.get_Ticker}', 
-                                        '{self.get_tipo_abbima}',
-                                        '{self.get_segmento}',
-                                        '{self.get_razao_social}'
-                                        '{self.get_cnpj}'
-                                        '{self.get_nome_pregao}'
-                                        '{self.get_prazo_doracao}'
-                                        '{self.get_tipo_gestao}'
-                                        '{self.get_cnpl_admin}')")
-                '''
-        
+        inset_fundo = f"""insert into Fundos values ('{self.get_Ticker()}','{self.get_tipo_abbima()}','{self.get_segmento()}','{self.get_conta_emit()}','{self.get_num_cota()}','{self.get_razao_social()}','{self.get_cnpj()}','{self.get_nome_pregao()}','{self.get_prazo_doracao()}','{self.get_tipo_gestao()}','{self.get_cnpl_admin()}')"""
+        return inset_fundo
+    
     def get_Ticker(self):
         return self.ticker
 
@@ -42,6 +36,9 @@ class Fundos:
     
     def get_segmento(self):
         return self.segmento
+    
+    def get_num_cota(self):
+        return self.num_cota
     
     def get_conta_emit(self):
         return self.conta_emit
@@ -66,3 +63,5 @@ class Fundos:
     
     def set_cnpl_admin(self, cnpj):
         self.cnpj_admin = cnpj
+
+    
