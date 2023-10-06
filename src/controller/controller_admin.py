@@ -61,12 +61,57 @@ class Controller_Admin():
         else:
             print(f"O Cnpj {admin._cnpj} do Administrador informado não existe.")
             return None
-        return
-    
-    '''Falta fazer '''
-    def deletar_admin(self):
         return   
+    
+    
+    def deletar_admin(self):
+        # Cria uma nova conexão com o banco que permite alteração
+        oracle = OracleQueries(can_write=True)
+        oracle.connect()
+        
+        # Solicita ao usuario o cadastro do Fundo
+        admin = int(input("informe o Cnpj do Administrador: "))
+        
+        while 10 <= len(admin) or 15 >= len(admin) or not admin.isnumeric():
+            admin = int(input("informe o Cnpj do Administrador: "))
+        
+        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+        
+            if not self.verifica_existencia(oracle, admin, tabela='FUNDOS',coluna=['CNPJ_ADMIN', 'ticker']):            
+                # Recupera os dados do fundo transformando em um DataFrame
+                df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, CNPJ_ADMIN FROM FUNDOS WHERE CNPJ_ADMIN ='{admin}'")
+                # Verificar se existe registro desse fundos na tabela cotações e dividendos
+                if not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='COTACOES',coluna=['ticker', 'id']) and not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='DIVIDENDOS',coluna=['ticker', 'id']):
+                
+                    if "S" == input(f"Tem certezar que deseja excluir registro das cotações e dividandos desse fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
+                        # Recupera os dados do COTACOES transformando em um DataFrame
+                        df_cotas_fundo = oracle.sqlToDataFrame(f"SELECT ticker, id FROM COTACOES WHERE TICKER ='{df_fundo.ticker.values[0]}'")
+                        # Recupera os dados do DIVIDENDOS transformando em um DataFrame
+                        df_dividendos_fundos = oracle.sqlToDataFrame(f"SELECT ticker, id FROM DIVIDENDOS WHERE TICKER ='{df_fundo.ticker.values[0]}'")
 
+                        for cota in df_cotas_fundo.size():
+                            # deleta os registro da tebala COTACOES referente ao fundo 
+                            ret = oracle.write(f"delete from COTACOES WHERE ID ='{cota.id.values()}'")
+                            print(ret)        
+                        for dividendo in df_dividendos_fundos.size():
+                            # deleta os registro da tebala COTACOES referente ao fundo 
+                            ret = oracle.write(f"delete from DIVIDENDOS WHERE ID ='{dividendo.id.values()}'")         
+                    else:
+                        print("Não é possivel exlcuir Fundo sem excluir a suas cotações e dividendos")
+                else:
+                    # Se não existir dados nas tabela  COTACOES e DIVIDENDOS o sistema vai perguntar se deseja exluir esse fundo.
+                    if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
+                        oracle.write(f"delete from FUNDOS WHERE TICKER ='{cota.id.values()}'")
+                    else: 
+                        print("Não relaizar processo de exclução")
+            else: 
+                if "S" == input(f"Tem certezar que deseja excluir esse administrador do Cnpj : {admin} ? S OU N").upper():
+                    dl_admin = oracle.write(f"delete from ADMINISTRADORES WHERE CNPJ ='{admin}'")
+                else: 
+                    print(f"processo de deletção abortado !")
+        else:
+            print("Não foi encontrado registro desse administrador")
+                               
     def cadastrar_admin(self) -> Administradores:
         nome = input("nome (Novo): ")
         telefone = input("Telefone (Novo): ")
@@ -90,9 +135,9 @@ class Controller_Admin():
             tabela: string -> tabela de pesquisa 
             coluna: dict  -> colunas das tabela e seguencia
             exemplo:
-                    select coluna[0]
+                    select coluna[1]
                         from tabela 
-                        where coluna[1] = fundos  
+                        where coluna[0] = fundos  
         
         '''
         df_cliente = oracle.sqlToDataFrame(f"""select {coluna[1]} from {tabela} where {coluna[0]} = '{valor}'""")

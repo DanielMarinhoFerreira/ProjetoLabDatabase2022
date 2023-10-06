@@ -16,8 +16,8 @@ class Controller_Fundos:
         oracle.connect()
         
         # Solicita ao usuario o cadastro do Fundo
-        #fundo = self.cadastro_fundo()
-        fundo = self.cadastro_fundo_teste()
+        #fundo = self.cadastro_fundo_teste() #"""teste"""
+        fundo = self.cadastro_fundo()
 
         if self.verifica_existencia(oracle, fundo.get_Ticker(), tabela='FUNDOS',coluna=['ticker', 'ticker']): #Verificar se exista no banco na tabela fondos 
             
@@ -83,31 +83,44 @@ class Controller_Fundos:
         else:
             print(f"O ticker {ticker} informado não existe.")
             return None
-    '''Falta fazer '''
+    
     def excluir_fundos(self):
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
         # Solicita ao usuário o código do fundo a ser alterado
-        ticker = int(input("informe o ticker do fundo: "))
+        ticker = input("informe o ticker do fundo: ")
         
         # Verifica se o fundo existe na base de dados
         if not self.verifica_existencia(oracle, ticker, tabela='FUNDOS',coluna=['ticker', 'ticker']):            
-            # Recupera os dados do novo cliente criado transformando em um DataFrame
-            df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, TIPO_ABBIMA FROM FUNDOS WHERE TICKER ='{ticker}'")
-            
-            # Revome o cliente da tabela
-            '''Tem que verificar em todas as tabela que existe esse fundo para exclui-lo'''
-            oracle.write(f"delete from fundos where ticker = {ticker}")   
-            #oracle.write()
-            
-            # Exibe os atributos do cliente excluído
-            print("Cliente Removido com Sucesso!")
-            print(df_fundo.ticker.values[0], df_fundo.segmento.values[0])
-            
-        else:
-            print(f"O ticker do fundo {ticker} não existe.")
+            # Recupera os dados do fundo transformando em um DataFrame
+            df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, CNPJ_ADMIN FROM FUNDOS WHERE TICKER ='{ticker}'")
+            # Verificar se existe registro desse fundos na tabela cotações e dividendos
+            if not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='COTACOES',coluna=['ticker', 'id']) and not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='DIVIDENDOS',coluna=['ticker', 'id']):
+                if "S" == input(f"Tem certezar que deseja excluir registro das cotações e dividandos desse fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
+                    # Recupera os dados do COTACOES transformando em um DataFrame
+                    df_cotas_fundo = oracle.sqlToDataFrame(f"SELECT ticker, id FROM COTACOES WHERE TICKER ='{ticker}'")
+                    # Recupera os dados do DIVIDENDOS transformando em um DataFrame
+                    df_dividendos_fundos = oracle.sqlToDataFrame(f"SELECT ticker, id FROM DIVIDENDOS WHERE TICKER ='{ticker}'")
+
+                    for cota in df_cotas_fundo.size():
+                        # deleta os registro da tebala COTACOES referente ao fundo 
+                        ret = oracle.write(f"delete from COTACOES WHERE ID ='{cota.id.values()}'")
+                        print(ret)        
+                    for dividendo in df_dividendos_fundos.size():
+                        # deleta os registro da tebala COTACOES referente ao fundo 
+                        ret = oracle.write(f"delete from DIVIDENDOS WHERE ID ='{dividendo.id.values()}'")         
+                else:
+                    print("Não é possivel exlcuir Fundo sem excluir a suas cotações e dividendos")
+            else:
+                # Se não existir dados nas tabela  COTACOES e DIVIDENDOS o sistema vai perguntar se deseja exluir esse fundo.
+                if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
+                    oracle.write(f"delete from FUNDOS WHERE TICKER ='{cota.id.values()}'")
+                else: 
+                    print("Não relaizar processo de exclução")
+        else: 
+            print("Não foi encontrardo o ticker informado para deleção")     
 
     def cadastro_fundo_teste(sekf) ->Fundos:
         ticker = 'HGFF11'
@@ -158,9 +171,9 @@ class Controller_Fundos:
             tabela: string -> tabela de pesquisa 
             coluna: dict  -> colunas das tabela e seguencia
             exemplo:
-                    select coluna[0]
+                    select coluna[1]
                         from tabela 
-                        where coluna[1] = fundos  
+                        where coluna[0] = fundos  
         
         '''
         df_cliente = oracle.sqlToDataFrame(f"""select {coluna[1]} from {tabela} where {coluna[0]} = '{valor}'""")
