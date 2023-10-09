@@ -34,11 +34,20 @@ class Controller_Admin():
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        # Solicita ao usuário o código do fundo a ser alterado
-        admin = self.cadastrar_admin()
+        # Solicita ao usuario o cadastro do Fundo
+        admin = int(input("informe o Cnpj do Administrador: "))
+        
+        while 14 < admin or 15 >= admin or not admin.isnumeric():
+            admin = int(input("informe o Cnpj do Administrador: "))
+
 
         # Verifica se o fundo existe na base de dados
-        if not self.verifica_existencia(oracle, admin.get_cnpj(), tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+        if not self.verifica_existencia(oracle, admin_cnpj.get_cnpj(), tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+            
+            admin_cnpj = Administradores()
+            admin_cnpj.set_cnpj(clAd=admin_cnpj)
+            admin = self.cadastrar_admin()
+
             
             # Atualiza todos 
             if not admin.get_email() and admin.get_nome() and admin.get_site() and admin.get_telefone():
@@ -72,7 +81,7 @@ class Controller_Admin():
         # Solicita ao usuario o cadastro do Fundo
         admin = int(input("informe o Cnpj do Administrador: "))
         
-        while 10 <= len(admin) or 15 >= len(admin) or not admin.isnumeric():
+        while 14 < len(admin) or 15 >= len(admin) or not admin.isnumeric():
             admin = int(input("informe o Cnpj do Administrador: "))
         
         if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
@@ -112,20 +121,29 @@ class Controller_Admin():
         else:
             print("Não foi encontrado registro desse administrador")
                                
-    def cadastrar_admin(self) -> Administradores:
-        nome = input("nome (Novo): ")
-        telefone = input("Telefone (Novo): ")
-        email = input("E-mail (Novo): ")
-        site = input("Site (Novo): ")
-        cnpj = input("Cnpj (Novo): ")
+    def cadastrar_admin(self, clAd:Administradores) -> Administradores:
         
-        sleep(1) #ms
-        cnpj = input("cnpj (Novo): ")
-        while (len(cnpj) < 14):
-            cnpj = input("cnpj (Novo): ")
 
-        admin = Administradores(nome=nome, telefone=telefone, email=email, site=site, cnpj=cnpj)
-        return admin
+        if clAd.admin.get_cnpj() != '':
+            clAd.admin.set_nome(nome = input("nome (Novo): "))
+            clAd.admin.set_nome(telefone = input("Telefone (Novo): "))
+            clAd.admin.set_nome(adminemail = input("E-mail (Novo): "))
+            clAd.admin.set_site(site = input("Site (Novo): "))
+            return None
+        else:
+            admin = Administradores()
+            sleep(1) #ms
+            cnpj = input("cnpj (Novo): ")
+            while len(cnpj) < 14 or not cnpj.isnumeric():
+                cnpj = input("cnpj (Novo): ")
+
+            admin.get_cnpj(cnpj=cnpj)
+            admin.set_nome(nome = input("nome (Novo): "))
+            admin.set_nome(telefone = input("Telefone (Novo): "))
+            admin.set_nome(adminemail = input("E-mail (Novo): "))
+            admin.set_site(site = input("Site (Novo): "))
+
+        return admin 
     
     def verifica_existencia(self, oracle:OracleQueries, valor:str=None, tabela:str=None, coluna:list=None) -> bool:
         '''

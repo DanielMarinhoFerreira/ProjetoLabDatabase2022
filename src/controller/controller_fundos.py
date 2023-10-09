@@ -36,6 +36,7 @@ class Controller_Fundos:
                      
                 if contin.upper != 'S':
                     print("serar finalizado sem realizar o cadastro do fundo")
+                    return None
                 else:
                     admin = self.cadastrar_admin()
                     if not self.verifica_existencia(oracle, valor=admin.get_cnpj(), tabela="ADMINISTRADORES", coluna=['CNPJ','CNPJ']):
@@ -57,6 +58,7 @@ class Controller_Fundos:
                         print(df_fundo.ticker.values[0], df_fundo.nome.values[0])
                     else:
                         print("Erro na verificação da existencia do cadastro admin")
+                        return None
         else:
             print(f"O ticker: {fundo.get_Ticker()} desse fundo já está cadastrado.")
             return None 
