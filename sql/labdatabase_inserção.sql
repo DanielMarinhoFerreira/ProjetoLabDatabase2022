@@ -28,10 +28,16 @@ INSERT INTO FUNDOS (TICKER, TIPO_ABBIMA, SEGMENTO, CONTA_EMIT, NUM_COTAS, RAZAO_
 INSERT INTO COTACOES (TICKER, DATA_COTA, COTA_ATUAL, REDIMENTO_ATUAL, MINIMO_COTA, MAXIMO_COTA, ABERTURA, VOLUME_COTAS, MES, P_VP)
 WITH DATA_COTACOES AS (
 
-    SELECT  'AAZQ11',   '03/10/2023',   '09.25',    '1.28',     '09.28',    '09.95',   '09.29',     '2403.728',    '04/10/2023', '1.2'  FROM DUAL UNION ALL
-    SELECT  'ABCP11',   '03/10/2023',   '66.81',    '0.89',     '63.47',    '109.7',    '66.84',    '4709.082',     '04/10/2023','1.0'   FROM DUAL UNION ALL
-    SELECT  'AFHI11',   '03/10/2023',   '95.70',    '1.07',     '90.30',    '103.70',   '95.98',    '3343.095',     '04/10/2023','1.2'   FROM DUAL UNION ALL
-    SELECT  'AIEC11',   '03/10/2023',   '63.16',    '1.16',     '60.52',    '70.86',    '63.63',    '4824.987',     '04/10/2023','1.3'   FROM DUAL 
+    SELECT  'AAZQ11',   '03/10/2023',   '09.25',    '1.28',     '09.28',    '09.95',   '09.29',     '24037284',    '04/10/2023', '1.2'  FROM DUAL UNION ALL
+    SELECT  'ABCP11',   '03/10/2023',   '66.81',    '0.89',     '63.47',    '109.7',    '66.84',    '4709082',     '04/10/2023','1.0'   FROM DUAL UNION ALL
+    SELECT  'AFHI11',   '03/10/2023',   '95.70',    '1.07',     '90.30',    '103.70',   '95.98',    '3343095',     '04/10/2023','1.2'   FROM DUAL UNION ALL
+    SELECT  'AIEC11',   '03/10/2023',   '63.16',    '1.16',     '60.52',    '70.86',    '63.63',    '4824.987',     '04/10/2023','1.3'   FROM DUAL UNION ALL
+
+    SELECT  'AAZQ11',   '13/10/2023',   '09.35',    '0.11',     '09.32',    '09.36',   '09.34',     '24037284',    '13/10/2023', '0.97'  FROM DUAL UNION ALL
+    SELECT  'ABCP11',   '13/10/2023',   '67.80',    '-0.31',     '67.68',    '68.01',    '68.01',    '4709082',     '13/10/2023','0.74'   FROM DUAL UNION ALL
+    SELECT  'AFHI11',   '13/10/2023',   '98.19',    '0.051',     '97.75',    '98.73',   '98.14',    '3343095',     '13/10/2023','1.03'   FROM DUAL UNION ALL
+    SELECT  'AIEC11',   '13/10/2023',   '62.40',    '0.22',     '62.40',    '63.10',    '62.54',    '4824987',     '13/10/2023','1.3'   FROM DUAL 
+
     )
     SELECT * FROM DATA_COTACOES;
 
