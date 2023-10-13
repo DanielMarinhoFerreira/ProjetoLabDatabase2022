@@ -1,4 +1,5 @@
 from model.fundos import Fundos
+from model.Administradores import Administradores
 from connection.oracle_queries import OracleQueries
 from time import sleep
 
@@ -10,6 +11,7 @@ class Controller_Fundos:
     def inserir_fundos(self) -> None:
         ''' Ref.: https://cx-oracle.readthedocs.io/en/latest/user_guide/plsql_execution.html#anonymous-pl-sql-blocks'''
         
+        lRet = [True, '']
         contin = ''
         # Cria uma nova conexão com o banco que permite alteração
         oracle = OracleQueries(can_write=True)
@@ -21,7 +23,7 @@ class Controller_Fundos:
 
         if self.verifica_existencia(oracle, fundo.get_Ticker(), tabela='FUNDOS',coluna=['ticker', 'ticker']): #Verificar se exista no banco na tabela fondos 
             
-            if not self.verifica_existencia(oracle, valor=fundo.get_cnpl_admin(), tabela="ADMINISTRADORES", coluna=['CNPJ','CNPJ']):
+            if not self.verifica_existencia(oracle, valor=fundo.get_cnpl_admin(), tabela="ADMINISTRADORES", coluna=['CNPJ_ADMIN','CNPJ_ADMIN']):
                 #Inserir o cadastro do Fundo
                 oracle.write(fundo.set_insert())
                 
@@ -29,36 +31,44 @@ class Controller_Fundos:
                 df_fundo = oracle.sqlToDataFrame(f"select ticker, TIPO_ABBIMA from FUNDOS where ticker = '{fundo.get_Ticker()}'")
                 print("Ticker: "+ df_fundo.ticker.values[0] +" : "+ df_fundo.tipo_abbima.values[0] +" Cadastrdo !")
             else:
-                contin = input("Administrador não cadastrado, deseja cadastrar administrador ? Digite S ou N")
+                contin = input("Administrador não cadastrado, deseja cadastrar administrador ? Digite S ou N ")
                 
-                while contin.upper != 'S' or contin.upper !='N':
-                     contin = input("Informe um valor valido. Digite S ou N : ")
-                     
-                if contin.upper != 'S':
+                while lRet[0] != False and not lRet[1]:
+
+                    if contin.upper() == 'S':
+                        lRet[0] = True
+                        lRet[1] = contin.upper()
+                    elif contin.upper() == 'N':
+                        lRet[0] = False
+                        lRet[1] = contin.upper()
+                    else:
+                        contin = input("Informe um valor valido. Digite S ou N : ")
+
+                # caso valor for falso   
+                if not lRet[0] and lRet[1] == 'N':
                     print("serar finalizado sem realizar o cadastro do fundo")
                     return None
+                elif lRet[0] and lRet[1] == 'S':
+                    admin = Administradores()
+                    admin.set_cnpj(fundo.get_cnpl_admin())
+                    admin.set_nome(nome = input("nome (Novo): "))
+                    admin.set_telefone(telefone = input("Telefone (Novo): "))
+                    admin.set_email(email = input("E-mail (Novo): "))
+                    admin.set_site(site = input("Site (Novo): "))
+
+                    oracle.write(admin.set_insert_admin())  
+                    # Recupera os dados do novo ticker criado transformando em um DataFrame
+                    df_admin = oracle.sqlToDataFrame(f"select CNPJ_ADMIN, NOME from ADMINISTRADORES where CNPJ_ADMIN = '{admin.get_cnpj()}'")
+                    print("administrador do CNPJ: "+ str(df_admin.cnpj_admin.values[0]) +" : "+ df_admin.nome.values[0] +" Cadastrdo !")
+                    
+                    oracle.write(fundo.set_insert())
+                
+                    # Recupera os dados do novo ticker criado transformando em um DataFrame
+                    df_fundo = oracle.sqlToDataFrame(f"select ticker, TIPO_ABBIMA from FUNDOS where ticker = '{fundo.get_Ticker()}'")
+                    print("Ticker: "+ df_fundo.ticker.values[0] +" : "+ df_fundo.tipo_abbima.values[0] +" Cadastrdo !")
+
                 else:
-                    admin = self.cadastrar_admin()
-                    if not self.verifica_existencia(oracle, valor=admin.get_cnpj(), tabela="ADMINISTRADORES", coluna=['CNPJ','CNPJ']):
-                        #Inserir o cadastro do admin
-                        oracle.write(admin.set_insert()) 
-                        
-                        # Recupera os dados do novo admin criado transformando em um DataFrame
-                        df_admin = oracle.sqlToDataFrame(f"SELECT CNPJ FROM ADMINISTRADORES WHERE CNPJ='{admin.get_cnpj()}'")
-                        print(df_admin.cnpj.values[0])
-                        
-                        #Alterar CNJ do admin no Fundo 
-                        fundo.set_cnpl_admin(admin.get_cnpj())
-                        
-                        #Inserir o cadastro do Fundo
-                        oracle.write(admin.set_insert())
-                        
-                        # Recupera os dados do novo ticker criado transformando em um DataFrame
-                        df_fundo = oracle.sqlToDataFrame(f"select ticker, nome from ticker where ticker = '{fundo.get_Ticker()}'")
-                        print(df_fundo.ticker.values[0], df_fundo.nome.values[0])
-                    else:
-                        print("Erro na verificação da existencia do cadastro admin")
-                        return None
+                    print("ocorreu algum erro. Solicite verificação do TI")
         else:
             print(f"O ticker: {fundo.get_Ticker()} desse fundo já está cadastrado.")
             return None 
@@ -147,12 +157,12 @@ class Controller_Fundos:
             tipo_abbima = input("tipo_abbima (Novo): ")
             segmento = input("segmento (Novo): ")
             conta_emit = input("conta emitidas (Novo): ")
-            num_cotas = input("Numero de conta (Novo): ")
+            num_cotas = input("Numero de cotistas (Novo): ")
             razao_social = input("razão social (Novo): ")
             
             sleep(1) #ms
             cnpj = input("cnpj (Novo): ")
-            while (len(cnpj) < 14):
+            while not cnpj.isnumeric() or 14 < len(cnpj) or 15 <= len(cnpj):
                 cnpj = input("cnpj (Novo): ")
                 
             nome_pregao = input("nome pregão (Novo): ")

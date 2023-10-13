@@ -13,19 +13,25 @@ class Controller_Admin():
         oracle = OracleQueries(can_write=True)
         oracle.connect()
         
-        # Solicita ao usuario o cadastro do Fundo
-        admin = self.cadastrar_admin()
+       
+        # Solicita CNPJ do administrador 
+        admin = input("informe o Cnpj do Administrador: ")
+            
+        while not admin.isnumeric() or len(admin) > 14 or len(admin) <= 13:
+            admin = input("informe o Cnpj do Administrador: ")
+       
 
-        if self.verifica_existencia(oracle, admin.get_cnpj(), tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']): #Verificar se exista no banco na tabela fondos 
-        
-            #Inserir o cadastro do Fundo
-            oracle.write(admin.set_insert())
-                
+        if self.verifica_existencia(oracle, valor=admin, tabela='ADMINISTRADORES',coluna=['CNPJ_ADMIN', 'CNPJ_ADMIN']): #Verificar se exista no banco na tabela fondos 
+            
+            # solicita o restante do cadastro 
+            admin = self.cadastrar_admin(Cnpj_admin=admin)
+            # Inserir o cadastro do Fundo
+            oracle.write(admin.set_insert_admin())  
             # Recupera os dados do novo ticker criado transformando em um DataFrame
-            df_admin = oracle.sqlToDataFrame(f"select CNPJ, NOME from ADMINISTRADORES where CNPJ = '{admin.get_cnpj()}'")
-            print("administrador do CNPJ: "+ df_admin.cnpj.values[0] +" : "+ df_admin.nome.values[0] +" Cadastrdo !")  
+            df_admin = oracle.sqlToDataFrame(f"select CNPJ_ADMIN, NOME from ADMINISTRADORES where CNPJ_ADMIN = '{admin.get_cnpj()}'")
+            print("administrador do CNPJ: "+ df_admin.cnpj_admin.values[0] +" : "+ df_admin.nome.values[0] +" Cadastrdo !")  
         else:
-            print(f"O ticker: {df_admin.get_Ticker()} desse fundo já está cadastrado.")
+            print(f"Existe Administrador cadastrado com esse CNPJ {admin}")
             return None 
     
     def atualizar_admin(self):
@@ -42,11 +48,11 @@ class Controller_Admin():
 
 
         # Verifica se o fundo existe na base de dados
-        if not self.verifica_existencia(oracle, admin_cnpj.get_cnpj(), tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
             
-            admin_cnpj = Administradores()
-            admin_cnpj.set_cnpj(clAd=admin_cnpj)
-            admin = self.cadastrar_admin()
+            obj_admin = Administradores()
+            obj_admin.set_cnpj(admin)
+            admin = self.cadastrar_admin(clAd=obj_admin)
 
             
             # Atualiza todos 
@@ -79,16 +85,16 @@ class Controller_Admin():
         oracle.connect()
         
         # Solicita ao usuario o cadastro do Fundo
-        admin = int(input("informe o Cnpj do Administrador: "))
+        admin = input("informe o Cnpj do Administrador: ")
         
-        while 14 < len(admin) or 15 >= len(admin) or not admin.isnumeric():
-            admin = int(input("informe o Cnpj do Administrador: "))
+        while not admin.isnumeric() or 14 < len(admin) or 15 <= len(admin):
+            admin = input("informe o Cnpj do Administrador: ")
         
-        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ_ADMIN', 'CNPJ_ADMIN']):
         
             if not self.verifica_existencia(oracle, admin, tabela='FUNDOS',coluna=['CNPJ_ADMIN', 'ticker']):            
                 # Recupera os dados do fundo transformando em um DataFrame
-                df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, CNPJ_ADMIN FROM FUNDOS WHERE CNPJ_ADMIN ='{admin}'")
+                df_fundo = oracle.sqlToDataFrame(f"SELECT TICKER, CNPJ_ADMIN FROM FUNDOS WHERE CNPJ_ADMIN ='{admin}'")
                 # Verificar se existe registro desse fundos na tabela cotações e dividendos
                 if not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='COTACOES',coluna=['ticker', 'id']) and not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='DIVIDENDOS',coluna=['ticker', 'id']):
                 
@@ -104,45 +110,46 @@ class Controller_Admin():
                             print(ret)        
                         for dividendo in df_dividendos_fundos.size():
                             # deleta os registro da tebala COTACOES referente ao fundo 
-                            ret = oracle.write(f"delete from DIVIDENDOS WHERE ID ='{dividendo.id.values()}'")         
+                            ret = oracle.write(f"delete from DIVIDENDOS WHERE ID ='{dividendo.id.values()}'")    
+
+                        oracle.write(f"delete from ADMINISTRADORES WHERE CNPJ_ADMIN ='{admin}'")     
                     else:
                         print("Não é possivel exlcuir Fundo sem excluir a suas cotações e dividendos")
                 else:
                     # Se não existir dados nas tabela  COTACOES e DIVIDENDOS o sistema vai perguntar se deseja exluir esse fundo.
-                    if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
-                        oracle.write(f"delete from FUNDOS WHERE TICKER ='{cota.id.values()}'")
+                    if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N ").upper():
+                        oracle.write(f"delete from FUNDOS WHERE TICKER ='{df_fundo.ticker.values[0]}'")
+
+                        oracle.write(f"delete from ADMINISTRADORES WHERE CNPJ_ADMIN ='{admin}'")
                     else: 
                         print("Não relaizar processo de exclução")
             else: 
-                if "S" == input(f"Tem certezar que deseja excluir esse administrador do Cnpj : {admin} ? S OU N").upper():
-                    dl_admin = oracle.write(f"delete from ADMINISTRADORES WHERE CNPJ ='{admin}'")
+                if "S" == input(f"Tem certezar que deseja excluir esse administrador do Cnpj : {admin} ? S OU N ").upper():
+                    oracle.write(f"delete from ADMINISTRADORES WHERE CNPJ_ADMIN ='{admin}'")
                 else: 
                     print(f"processo de deletção abortado !")
         else:
             print("Não foi encontrado registro desse administrador")
                                
-    def cadastrar_admin(self, clAd:Administradores) -> Administradores:
+    def cadastrar_admin(self, Cnpj_admin:str='') -> Administradores:
         
+        admin = Administradores()
 
-        if clAd.admin.get_cnpj() != '':
-            clAd.admin.set_nome(nome = input("nome (Novo): "))
-            clAd.admin.set_nome(telefone = input("Telefone (Novo): "))
-            clAd.admin.set_nome(adminemail = input("E-mail (Novo): "))
-            clAd.admin.set_site(site = input("Site (Novo): "))
-            return None
-        else:
-            admin = Administradores()
+        if Cnpj_admin == '' or not Cnpj_admin.isnumeric():
+            
             sleep(1) #ms
             cnpj = input("cnpj (Novo): ")
-            while len(cnpj) < 14 or not cnpj.isnumeric():
+            while not admin.isnumeric() or len(admin) > 14 or len(admin) <= 13:
                 cnpj = input("cnpj (Novo): ")
-
-            admin.get_cnpj(cnpj=cnpj)
-            admin.set_nome(nome = input("nome (Novo): "))
-            admin.set_nome(telefone = input("Telefone (Novo): "))
-            admin.set_nome(adminemail = input("E-mail (Novo): "))
-            admin.set_site(site = input("Site (Novo): "))
-
+            admin.set_cnpj(cnpj)
+        elif not Cnpj_admin:
+            admin.set_cnpj(cnpj=Cnpj_admin)
+        
+        admin.set_nome(nome = input("nome (Novo): "))
+        admin.set_telefone(telefone = input("Telefone (Novo): "))
+        admin.set_email(email = input("E-mail (Novo): "))
+        admin.set_site(site = input("Site (Novo): "))
+        
         return admin 
     
     def verifica_existencia(self, oracle:OracleQueries, valor:str=None, tabela:str=None, coluna:list=None) -> bool:

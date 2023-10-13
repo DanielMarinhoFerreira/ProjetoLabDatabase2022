@@ -8,24 +8,25 @@
 class Fundos:
     
     
-    def __init__(self, ticker:str, tipo_abbima:str, segmento:str,num_cotas:int ,conta_emit:int, razao_social:str, cnpj:int, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin:int) -> None:
+    def __init__(self, ticker:str, tipo_abbima:str, segmento:str,num_cotas:int ,conta_emit:int, razao_social:str, cnpj, nome_pregao:str, prazo_doracao:str, tipo_gestao:str, cnpj_admin) -> None:
         self.ticker = ticker        
         self.tipo_abbima = tipo_abbima
         self.segmento = segmento
-        self.conta_emit:int = conta_emit
+        self.conta_emit = conta_emit
         self.num_cota = num_cotas
         self.razao_social = razao_social
-        self.cnpj:int = cnpj
+        self.cnpj = cnpj
         self.nome_pregao = nome_pregao
         self.prazo_doracao = prazo_doracao
-        self.tipo_gestao:str = tipo_gestao
-        self.cnpj_admin:int = cnpj_admin
+        self.tipo_gestao = tipo_gestao
+        self.cnpj_admin = cnpj_admin
     
     def __delattr__(self) -> None:
         pass
 
     def set_insert(self):
-        inset_fundo = f"""insert into Fundos values ('{self.get_Ticker()}','{self.get_tipo_abbima()}','{self.get_segmento()}','{self.get_conta_emit()}','{self.get_num_cota()}','{self.get_razao_social()}','{self.get_cnpj()}','{self.get_nome_pregao()}','{self.get_prazo_doracao()}','{self.get_tipo_gestao()}','{self.get_cnpl_admin()}')"""
+        inset_fundo = f"""insert into Fundos (TICKER, TIPO_ABBIMA, SEGMENTO, CONTA_EMIT, NUM_COTAS, RAZAO_SOCIAL, CNPJ, NOME_PREGAO, PRAZO_DURACAO, TIPO_GESTAO, CNPJ_ADMIN)
+        values ('{self.get_Ticker()}','{self.get_tipo_abbima()}','{self.get_segmento()}','{self.get_conta_emit()}','{self.get_num_cota()}','{self.get_razao_social()}','{self.get_cnpj()}','{self.get_nome_pregao()}','{self.get_prazo_doracao()}','{self.get_tipo_gestao()}','{self.get_cnpl_admin()}')"""
         return inset_fundo
     
     def get_Ticker(self):

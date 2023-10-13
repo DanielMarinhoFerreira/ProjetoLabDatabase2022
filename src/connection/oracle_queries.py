@@ -77,9 +77,13 @@ class OracleQueries: # Class que realizar conexão com banco
         - query: consulta utilizada para recuperação dos dados
         return: um DataFrame da bibliotec4a Pandas
         '''
-        self.cur.execute(query)
-        rows = self.cur.fetchall()
-        return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
+        try:
+            self.cur.execute(query)
+            rows = self.cur.fetchall()
+            return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
+        except cx_Oracle.DatabaseError as erro:
+            print("PROCURE ADM DO SISTEMA, ERRO: " + erro)
+            
 
     def sqlToMatrix(self, query:str) -> tuple:
         '''

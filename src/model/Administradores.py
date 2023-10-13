@@ -8,19 +8,16 @@
 
 class Administradores:
     
-
-    def __init__(self, nome, telefone, email, site, cnpj):
+    def __init__(self, nome:str='', telefone:str='', email:str='', site:str='', cnpj:str=''):
         self._nome = nome 
         self._telefone = telefone
         self._email = email
         self._site = site
         self._cnpj = cnpj
-        
-    def __init__():
-        pass
-        
-    def set_insert(self):
-        admin_insert = f'''insert into Fundos values ('{self.get_nome()}','{self.get_telefone()}','{self.get_email}','{self.get_site}','{self.get_cnpj})'''
+
+    #(NOME, TELEFONE, EMAIL,URL_SITE, CNPJ_ADMIN)
+    def set_insert_admin(self):
+        admin_insert = f"""insert into ADMINISTRADORES (NOME, TELEFONE, EMAIL, URL_SITE, CNPJ_ADMIN) values ('{self._nome}','{self._telefone}','{self._email}','{self._site}','{self._cnpj}')"""
         return  admin_insert
     
     def get_nome(self):
