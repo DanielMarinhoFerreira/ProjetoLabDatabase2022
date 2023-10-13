@@ -1,5 +1,5 @@
-select COT.TICKER, COT.REDIMENTO_ATUAL, DIV.DIV_YIELD, (COT.MINIMO_COTA - COT.MAXIMO_COTA) AS COT_RED
-from COTACOES COT 
-JOIN DIVIDENDOS DIV ON COT.TICKER = DIV.TICKER AND COT.DATA_COTA = DIV.DATA_COTA, COT.COTA_ATUAL = DIV.COTA_ATUAL
-WHERE DATA_DIVIDA BETWEEN '2017-03-05' and '2018-04-0'
-    GROUP BY COT.TICKER
+select div.ticker, cot.p_vp, sum(div.rendimento) as rendimento_total
+from dividendos div
+join cotacoes cot on cot.ticker = div.ticker
+where cot.p_vp >= '1'
+group by div.ticker, cot.p_vp, div.rendimento

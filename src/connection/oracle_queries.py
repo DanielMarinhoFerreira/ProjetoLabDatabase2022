@@ -81,8 +81,11 @@ class OracleQueries: # Class que realizar conexão com banco
             self.cur.execute(query)
             rows = self.cur.fetchall()
             return DataFrame(rows, columns=[col[0].lower() for col in self.cur.description])
-        except cx_Oracle.DatabaseError as erro:
-            print("PROCURE ADM DO SISTEMA, ERRO: " + erro)
+        except cx_Oracle.IntegrityError as erro:
+            erro_obj  = erro.args
+            print("PROCURE ADM DO SISTEMA")
+            print("ERRO codigo: " + str(erro_obj.code))
+            print("ERRO mensagem: " + str(erro_obj.message))
             
 
     def sqlToMatrix(self, query:str) -> tuple:
