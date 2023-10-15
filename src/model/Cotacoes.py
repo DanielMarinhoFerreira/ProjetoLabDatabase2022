@@ -71,10 +71,10 @@ class Cotacoes():
         self.rendimento_atual = rendimento
     
     def set_minimo(self, minimo_cota):
-        self.cota_minima = minimo_cota
+        self.minimo_cota = minimo_cota
 
     def set_maximo(self, maximo_cota):
-        self.cota_maximo = maximo_cota
+        self.maximo_cota = maximo_cota
     
     def set_abertura(self, abertura):
         self.arbetura = abertura

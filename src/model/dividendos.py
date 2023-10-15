@@ -9,34 +9,52 @@
 class Dividendos:
     
     
-    def __init__(self, ticker, data, conta_atual, ult_divid, dy_ult_div, div_acao, div_yield):
-        self._ticker = ticker
-        self._data = data
-        self._conta_atual = conta_atual
-        self._ult_divid = ult_divid
-        self._dy_ult_div = dy_ult_div
-        self._div_acao = div_acao
-        self._div_yield = div_yield
-        
+    def __init__(self, ticker:str='', data_pag:str='', cota_base:str='', ult_divid:str='', rendimento:str='', div_yield:str=''):
+        self.ticker = ticker
+        self.data_pag = data_pag
+        self.cota_base = cota_base
+        self.ult_divid = ult_divid
+        self.rendimento = rendimento
+        self.div_yield = div_yield
+
+    def get_insert(self):
+        insert_dividendos = f"""INSERT INTO DIVIDENDOS (TICKER, DATA_PAG, COTA_BASE, ULT_DIVID, RENDIMENTO, DIV_YIELD) 
+        VALUES ('{self.get_ticker()}','{self.get_data_pag()}','{self.get_cota_base()}','{self.get_ult_divid()}','{self.get_rendimento()}','{self.get_div_yield()}')"""
+        return insert_dividendos
+      
     def get_ticker(self):
-        return self._ticker
+        return self.ticker
 
-    def get_data(self):
-        return self._data
+    def get_data_pag(self):
+        return self.data_pag
 
-    def get_conta_atual(self):
-        return self._conta_atual
+    def get_cota_base(self):
+        return self.cota_base
 
     def get_ult_divid(self):
-        return self._ult_divid
+        return self.ult_divid
 
-    def get_dy_ult_div(self):
-        return self._dy_ult_div
-
-    def get_div_acao(self):
-        return self._div_acao
+    def get_rendimento(self):
+        return self.rendimento
 
     def get_div_yield(self):
-        return self._div_yield   
+        return self.div_yield   
 
+    def set_ticker(self, ticker):
+        self.ticker = ticker
+
+    def set_data_pag(self, data_pag):
+        self.data_pag = data_pag
+
+    def set_cota_base(self, cota_base):
+        self.cota_base = cota_base
+
+    def set_ult_divid(self, ult_divid):
+        self.ult_divid = ult_divid
+
+    def set_rendimento(self, rendimento):
+        self.rendimento = rendimento
+
+    def set_div_yield(self, div_yield):
+        self.div_yield = div_yield
         
