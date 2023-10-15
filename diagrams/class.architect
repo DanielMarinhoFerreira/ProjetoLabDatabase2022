@@ -28,7 +28,7 @@
     <column id="COL6" populated="true" UUID="31046541-1b4d-48f4-96c3-a628d46abb14" autoIncrement="false" autoIncrementSequenceName="FUNDOS_NUM_COTAS_seq" defaultValue="" name="NUM_COTAS" nullable="0" physicalName="NUM_COTAS" precision="38" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL7" populated="true" UUID="305e1d51-716e-4b7f-ac3c-dcf7c32eefea" autoIncrement="false" autoIncrementSequenceName="FUNDOS_RAZAO_SOCIAL_seq" defaultValue="" name="RAZAO_SOCIAL" nullable="0" physicalName="RAZAO_SOCIAL" precision="38" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL7" populated="true" UUID="305e1d51-716e-4b7f-ac3c-dcf7c32eefea" autoIncrement="false" autoIncrementSequenceName="FUNDOS_RAZAO_SOCIAL_seq" defaultValue="" name="RAZAO_SOCIAL" nullable="0" physicalName="RAZAO_SOCIAL" precision="80" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL8" populated="true" UUID="1c3c6a33-4449-45b3-a56d-c2a0b2ad39c4" autoIncrement="false" autoIncrementSequenceName="FUNDOS_CNPJ_seq" defaultValue="" name="CNPJ" nullable="0" physicalName="CNPJ" precision="14" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
@@ -104,7 +104,7 @@
     <column id="COL28" populated="true" UUID="a5cbc994-a36f-46f2-95cd-6109f3b09315" autoIncrement="false" autoIncrementSequenceName="COTACOES_COTA_ATUAL_seq" defaultValue="" name="COTA_ATUAL" nullable="0" physicalName="COTA_ATUAL" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL29" populated="true" UUID="a3a9cc9b-6a0c-44c3-8c5c-eee0a246eedf" autoIncrement="false" autoIncrementSequenceName="COTACOES_REDIMENTO_ATUAL_seq" defaultValue="" name="REDIMENTO_ATUAL" nullable="0" physicalName="REDIMENTO_ATUAL" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL29" populated="true" UUID="a3a9cc9b-6a0c-44c3-8c5c-eee0a246eedf" autoIncrement="false" autoIncrementSequenceName="COTACOES_RENDIMENTO_ATUAL_seq" defaultValue="" name="RENDIMENTO_ATUAL" nullable="0" physicalName="RENDIMENTO_ATUAL" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
     <column id="COL30" populated="true" UUID="fd86282c-9ccd-47e2-8ad3-6fa3695969e5" autoIncrement="false" autoIncrementSequenceName="COTACOES_MINIMO_COTA_seq" defaultValue="" name="MINIMO_COTA" nullable="0" physicalName="MINIMO_COTA" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
@@ -116,10 +116,13 @@
     <column id="COL32" populated="true" UUID="3c7bf846-3abd-4038-aa63-25e9b0dc8837" autoIncrement="false" autoIncrementSequenceName="COTACOES_ABERTURA_seq" defaultValue="" name="ABERTURA" nullable="0" physicalName="ABERTURA" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL33" populated="true" UUID="a57b6b8e-ae40-4b56-b86c-1ae1678c4610" autoIncrement="false" autoIncrementSequenceName="COTACOES_VOLUME_COTAS_seq" defaultValue="" name="VOLUME_COTAS" nullable="0" physicalName="VOLUME_COTAS" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL33" populated="true" UUID="a57b6b8e-ae40-4b56-b86c-1ae1678c4610" autoIncrement="false" autoIncrementSequenceName="COTACOES_VOLUME_COTAS_seq" defaultValue="" name="VOLUME_COTAS" nullable="0" physicalName="VOLUME_COTAS" precision="15" referenceCount="1" scale="4" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
     <column id="COL34" populated="true" UUID="3fe0bd08-439a-40d3-ad64-206e7196b482" autoIncrement="false" autoIncrementSequenceName="COTACOES_MES_seq" defaultValue="" name="MES" nullable="0" physicalName="MES" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL35" populated="true" UUID="a4e3fea0-267a-4784-9df8-670dc5681ace" autoIncrement="false" autoIncrementSequenceName="COTACOES_P_VP_seq" defaultValue="" name="P_VP" nullable="0" physicalName="P_VP" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -128,72 +131,72 @@
     <folder id="FOLTAB242" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
     <folder id="FOLTAB244" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX35" populated="true" UUID="4f27f602-c9e7-4af5-8335-deb4f84ab035" clustered="false" name="COTACOES_pk" physicalName="COTACOES_PK" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC36" populated="true" UUID="ada84b26-8cdb-4aa7-b61f-55c751ec2f58" ascendingOrDescending="UNSPECIFIED" column-ref="COL25" name="ID" physicalName="ID" />
+    <index id="IDX36" populated="true" UUID="4f27f602-c9e7-4af5-8335-deb4f84ab035" clustered="false" name="COTACOES_pk" physicalName="COTACOES_PK" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC37" populated="true" UUID="ada84b26-8cdb-4aa7-b61f-55c751ec2f58" ascendingOrDescending="UNSPECIFIED" column-ref="COL25" name="ID" physicalName="ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB37" populated="true" UUID="dffce207-8520-4715-ac61-b6e58d74379f" name="DIVIDENDOS" objectType="TABLE" physicalName="DIVIDENDOS" >
+  <table id="TAB38" populated="true" UUID="dffce207-8520-4715-ac61-b6e58d74379f" name="DIVIDENDOS" objectType="TABLE" physicalName="DIVIDENDOS" >
    <remarks></remarks>
-   <folder id="FOLTAB371" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL38" populated="true" UUID="5aeb805b-192c-442b-8513-d4ca71eb1c4b" autoIncrement="true" autoIncrementSequenceName="DIVIDENDOS_ID_seq" defaultValue="" name="ID" nullable="0" physicalName="ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+   <folder id="FOLTAB381" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL39" populated="true" UUID="5aeb805b-192c-442b-8513-d4ca71eb1c4b" autoIncrement="true" autoIncrementSequenceName="DIVIDENDOS_ID_seq" defaultValue="" name="ID" nullable="0" physicalName="ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL39" populated="true" UUID="344e7115-3945-4366-808d-a7135f62ee9d" autoIncrement="false" autoIncrementSequenceName="FUNDOS_TICKER_seq_2" defaultValue="" name="TICKER" nullable="0" physicalName="TICKER" precision="6" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL40" populated="true" UUID="344e7115-3945-4366-808d-a7135f62ee9d" autoIncrement="false" autoIncrementSequenceName="FUNDOS_TICKER_seq_2" defaultValue="" name="TICKER" nullable="0" physicalName="TICKER" precision="6" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL40" populated="true" UUID="dbad1352-9e47-4e34-90dd-bb3276e6e954" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DATA_COTA_seq" defaultValue="" name="DATA_COTA" nullable="0" physicalName="DATA_COTA" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL41" populated="true" UUID="dbad1352-9e47-4e34-90dd-bb3276e6e954" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DATA_COTA_seq" defaultValue="" name="DATA_COTA" nullable="0" physicalName="DATA_COTA" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL41" populated="true" UUID="4f0b1c40-5935-4411-8e5b-fb4de0936a41" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_COTA_ATUAL_seq" defaultValue="" name="COTA_ATUAL" nullable="0" physicalName="COTA_ATUAL" precision="4" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL42" populated="true" UUID="4f0b1c40-5935-4411-8e5b-fb4de0936a41" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_COTA_ATUAL_seq" defaultValue="" name="COTA_ATUAL" nullable="0" physicalName="COTA_ATUAL" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL42" populated="true" UUID="932dd1dd-c4a7-45e3-a805-06299c885a27" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_ULT_DIVID_seq" defaultValue="" name="ULT_DIVID" nullable="1" physicalName="ULT_DIVID" precision="4" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL43" populated="true" UUID="932dd1dd-c4a7-45e3-a805-06299c885a27" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_ULT_DIVID_seq" defaultValue="" name="ULT_DIVID" nullable="1" physicalName="ULT_DIVID" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL43" populated="true" UUID="d2d35c3e-0440-4cf8-b820-79e5bc80a085" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DY_ULT_seq" defaultValue="" name="DY_ULT" nullable="1" physicalName="DY_ULT" precision="4" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL44" populated="true" UUID="d2d35c3e-0440-4cf8-b820-79e5bc80a085" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DY_ULT_seq" defaultValue="" name="DY_ULT" nullable="1" physicalName="DY_ULT" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL44" populated="true" UUID="01d02f9f-f178-4611-9fdb-1a250b492d25" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DIV_ACAO_seq" defaultValue="" name="DIV_ACAO" nullable="1" physicalName="DIV_ACAO" precision="4" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL45" populated="true" UUID="01d02f9f-f178-4611-9fdb-1a250b492d25" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DIV_ACAO_seq" defaultValue="" name="DIV_ACAO" nullable="1" physicalName="DIV_ACAO" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
-    <column id="COL45" populated="true" UUID="52bfc4b5-8598-4d5e-8fcb-d54146dabf9b" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DIV_YIELD_seq" defaultValue="" name="DIV_YIELD" nullable="1" physicalName="DIV_YIELD" precision="4" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
+    <column id="COL46" populated="true" UUID="52bfc4b5-8598-4d5e-8fcb-d54146dabf9b" autoIncrement="false" autoIncrementSequenceName="DIVIDENDOS_DIV_YIELD_seq" defaultValue="" name="DIV_YIELD" nullable="1" physicalName="DIV_YIELD" precision="6" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB373" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB383" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB372" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB382" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB374" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX46" populated="true" UUID="1ee183dc-426c-4af0-b84d-ee3a07246b49" clustered="false" name="DIVIDENDOS_pk" physicalName="DIVIDENDOS_PK" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC47" populated="true" UUID="e1136f8d-abf4-4aed-b538-7397d579870b" ascendingOrDescending="UNSPECIFIED" column-ref="COL38" name="ID" physicalName="ID" />
+    <folder id="FOLTAB384" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX47" populated="true" UUID="1ee183dc-426c-4af0-b84d-ee3a07246b49" clustered="false" name="DIVIDENDOS_pk" physicalName="DIVIDENDOS_PK" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC48" populated="true" UUID="e1136f8d-abf4-4aed-b538-7397d579870b" ascendingOrDescending="UNSPECIFIED" column-ref="COL39" name="ID" physicalName="ID" />
     </index>
    </folder>
   </table>
   <relationships>
-   <relationship id="REL48" populated="true" UUID="1669d0e5-1ba6-4b53-bef1-c0c5b0951a6f" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="6" identifying="true" name="FUNDOS_COTACOES_fk" physicalName="FUNDOS_COTACOES_FK" pk-table-ref="TAB1" pkCardinality="6" updateRule="3" >
-    <column-mapping id="CMP49" populated="true" UUID="1b2ed7b3-b03f-4d37-ab2b-7ddfc66566bb" fk-column-ref="COL26" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   <relationship id="REL49" populated="true" UUID="1669d0e5-1ba6-4b53-bef1-c0c5b0951a6f" deferrability="7" deleteRule="3" fk-table-ref="TAB24" fkCardinality="6" identifying="true" name="FUNDOS_COTACOES_fk" physicalName="FUNDOS_COTACOES_fk" pk-table-ref="TAB1" pkCardinality="6" updateRule="3" >
+    <column-mapping id="CMP50" populated="true" UUID="1b2ed7b3-b03f-4d37-ab2b-7ddfc66566bb" fk-column-ref="COL26" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
    </relationship>
-   <relationship id="REL50" populated="true" UUID="e714b734-2ea4-47df-9728-fcdcf689eb32" deferrability="7" deleteRule="3" fk-table-ref="TAB37" fkCardinality="6" identifying="true" name="FUNDOS_DIVIDENDOS_fk" physicalName="FUNDOS_DIVIDENDOS_FK" pk-table-ref="TAB1" pkCardinality="6" updateRule="3" >
-    <column-mapping id="CMP51" populated="true" UUID="6bf10128-09b2-42fa-9ef3-db65046071a8" fk-column-ref="COL39" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   <relationship id="REL51" populated="true" UUID="e714b734-2ea4-47df-9728-fcdcf689eb32" deferrability="7" deleteRule="3" fk-table-ref="TAB38" fkCardinality="6" identifying="true" name="FUNDOS_DIVIDENDOS_fk" physicalName="FUNDOS_DIVIDENDOS_fk" pk-table-ref="TAB1" pkCardinality="6" updateRule="3" >
+    <column-mapping id="CMP52" populated="true" UUID="6bf10128-09b2-42fa-9ef3-db65046071a8" fk-column-ref="COL40" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
    </relationship>
-   <relationship id="REL52" populated="true" UUID="91f5a560-6f9d-45bb-af2d-04d1ef6ca084" deferrability="7" deleteRule="3" fk-table-ref="TAB1" fkCardinality="7" identifying="false" name="ADMINISTRADORES_FUNDOS_fk" physicalName="ADMINISTRADORES_FUNDOS_FK" pk-table-ref="TAB15" pkCardinality="6" updateRule="3" >
-    <column-mapping id="CMP53" populated="true" UUID="08bb8bec-6d80-422c-ae61-44ea908b98e1" fk-column-ref="COL12" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL16" />
+   <relationship id="REL53" populated="true" UUID="91f5a560-6f9d-45bb-af2d-04d1ef6ca084" deferrability="7" deleteRule="3" fk-table-ref="TAB1" fkCardinality="7" identifying="false" name="ADMINISTRADORES_FUNDOS_fk" physicalName="ADMINISTRADORES_FUNDOS_fk" pk-table-ref="TAB15" pkCardinality="6" updateRule="3" >
+    <column-mapping id="CMP54" populated="true" UUID="08bb8bec-6d80-422c-ae61-44ea908b98e1" fk-column-ref="COL12" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL16" />
    </relationship>
   </relationships>
  </target-database>
- <ddl-generator type="ca.sqlpower.architect.ddl.Oracle9PlusDDLGenerator" allow-connection="false"> </ddl-generator>
+ <ddl-generator type="ca.sqlpower.architect.ddl.Oracle9PlusDDLGenerator" allow-connection="true"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB1" x="716" y="117" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB15" x="234" y="166" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB24" x="1256" y="147" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB37" x="688" y="517" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-link relationship-ref="REL52" pkConnection="0.9212598425196851" fkConnection="0.19806763285024154" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL48" pkConnection="0.6908212560386473" fkConnection="0.28272251308900526" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL50" pkConnection="0.21323529411764705" fkConnection="0.7428571428571429" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-pane table-ref="TAB38" x="688" y="517" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL53" pkConnection="0.9212598425196851" fkConnection="0.19806763285024154" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL49" pkConnection="0.6908212560386473" fkConnection="0.28272251308900526" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL51" pkConnection="0.21323529411764705" fkConnection="0.7428571428571429" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
  </play-pen>
  <critic-manager>
   <critic-grouping platformType="Generic" enabled="true">
