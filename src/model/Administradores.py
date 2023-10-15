@@ -8,45 +8,45 @@
 
 class Administradores:
     
-    def __init__(self, nome:str='', telefone:str='', email:str='', site:str='', cnpj:str=''):
-        self._nome = nome 
-        self._telefone = telefone
-        self._email = email
-        self._site = site
-        self._cnpj = cnpj
+    def __init__(self, nome:str='', telefone:str='', email:str='', url_site:str='', cnpj_admin:str=''):
+        self.nome = nome 
+        self.telefone = telefone
+        self.email = email
+        self.url_site = url_site
+        self.cnpj_admin = cnpj_admin
 
     #(NOME, TELEFONE, EMAIL,URL_SITE, CNPJ_ADMIN)
-    def set_insert_admin(self):
-        admin_insert = f"""insert into ADMINISTRADORES (NOME, TELEFONE, EMAIL, URL_SITE, CNPJ_ADMIN) values ('{self._nome}','{self._telefone}','{self._email}','{self._site}','{self._cnpj}')"""
+    def get_insert_admin(self):
+        admin_insert = f"""insert into ADMINISTRADORES (NOME, TELEFONE, EMAIL, URL_SITE, CNPJ_ADMIN) values ('{self.nome}','{self.telefone}','{self.email}','{self.url_site}','{self.cnpj_admin}')"""
         return  admin_insert
     
     def get_nome(self):
-        return self._nome
+        return self.nome
     
     def get_telefone(self):
-        return self._telefone
+        return self.telefone
     
     def get_email(self):
-        return self._email
+        return self.email
         
-    def get_site(self):
-        return self._site
+    def get_url_site(self):
+        return self.url_site
     
-    def get_cnpj(self):
-        return self._cnpj
+    def get_cnpj_admin(self):
+        return self.cnpj_admin
     
     def set_nome(self, nome):
-        self._nome = nome
+        self.nome = nome
     
     def set_telefone(self,telefone):
-        self._telefone = telefone
+        self.telefone = telefone
     
     def set_email(self,  email):
-        self._email = email
+        self.email = email
         
-    def set_site(self, site):
-        self._site = site 
+    def set_site(self, url_site):
+        self.url_site = url_site 
     
-    def set_cnpj(self, cnpj):
-        self._cnpj = cnpj            
+    def set_cnpj(self, cnpj_admin):
+        self.cnpj_admin = cnpj_admin            
             

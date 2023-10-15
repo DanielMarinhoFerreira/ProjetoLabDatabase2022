@@ -129,8 +129,8 @@ class Controller_Cotacoes():
         cotacao.set_data_cota(data_atual = input("Data cotação (Novo): "))
         cotacao.set_cota_atual(cota_atual = input("Cotação Atual (Novo): "))
         cotacao.set_rendimento_atual(rendimento = input("Rendimento (Novo): "))
-        cotacao.set_minimo(cota_minima= input("Cota minima (Novo): "))
-        cotacao.set_maximo(cota_maxima= input("Cota maxima (Novo): "))
+        cotacao.set_minimo(minimo_cota= input("Cota minima (Novo): "))
+        cotacao.set_maximo(maximo_cota= input("Cota maxima (Novo): "))
         cotacao.set_abertura(abertura= input("Abertura (Novo): "))
         cotacao.set_volume_cotas(volume_cotas= input("Valume Cotas (Novo): "))
         

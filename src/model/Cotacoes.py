@@ -24,7 +24,7 @@ class Cotacoes():
         self.p_vp = p_vp
 
     def set_insert(self):
-        inset_cotacoes = (f"""INSERT INTO COTACOES (TICKER, DATA_COTA, COTA_ATUAL, REDIMENTO_ATUAL, MINIMO_COTA, MAXIMO_COTA, ABERTURA, VOLUME_COTAS, MES, P_VP) values ('{self.get_ticker()}','{self.get_data_cota()}','{self.get_cota_atual()}','{self.get_rendimento_atual()}', '{self.get_minimo()}','{self.get_maximo()}','{self.get_abertura()}','{self.get_volume_cotas()}','{self.get_mes()}','{self.get_p_vp()}')""")
+        inset_cotacoes = (f"""INSERT INTO COTACOES (TICKER, DATA_COTA, COTA_ATUAL, RENDIMENTO_ATUAL, MINIMO_COTA, MAXIMO_COTA, ABERTURA, VOLUME_COTAS, MES, P_VP) values ('{self.get_ticker()}','{self.get_data_cota()}','{self.get_cota_atual()}','{self.get_rendimento_atual()}', '{self.get_minimo()}','{self.get_maximo()}','{self.get_abertura()}','{self.get_volume_cotas()}','{self.get_mes()}','{self.get_p_vp()}')""")
 
         return inset_cotacoes
 

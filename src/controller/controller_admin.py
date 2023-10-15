@@ -26,10 +26,10 @@ class Controller_Admin():
             # solicita o restante do cadastro 
             admin = self.cadastrar_admin(Cnpj_admin=admin)
             # Inserir o cadastro do Fundo
-            oracle.write(admin.set_insert_admin())  
+            oracle.write(admin.get_insert_admin())  
             # Recupera os dados do novo ticker criado transformando em um DataFrame
             df_admin = oracle.sqlToDataFrame(f"select CNPJ_ADMIN, NOME from ADMINISTRADORES where CNPJ_ADMIN = '{admin.get_cnpj()}'")
-            print("administrador do CNPJ: "+ df_admin.cnpj_admin.values[0] +" : "+ df_admin.nome.values[0] +" Cadastrdo !")  
+            print("administrador do CNPJ: "+ str(df_admin.cnpj_admin.values[0]) +" : "+ df_admin.nome.values[0] +" Cadastrdo !")  
         else:
             print(f"Existe Administrador cadastrado com esse CNPJ {admin}")
             return None 
@@ -41,35 +41,46 @@ class Controller_Admin():
         oracle.connect()
 
         # Solicita ao usuario o cadastro do Fundo
-        admin = int(input("informe o Cnpj do Administrador: "))
+        admin = input("informe o Cnpj do Administrador: ")
         
-        while 14 < admin or 15 >= admin or not admin.isnumeric():
-            admin = int(input("informe o Cnpj do Administrador: "))
+        while not admin.isnumeric() or len(admin) > 14 or len(admin) <= 13:
+            admin = input("informe o Cnpj do Administrador: ")
 
 
         # Verifica se o fundo existe na base de dados
-        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ', 'CNPJ']):
+        if not self.verifica_existencia(oracle, admin, tabela='ADMINISTRADORES',coluna=['CNPJ_ADMIN', 'CNPJ_ADMIN']):
             
-            obj_admin = Administradores()
-            obj_admin.set_cnpj(admin)
-            admin = self.cadastrar_admin(clAd=obj_admin)
+        
+            obj_admin = self.cadastrar_admin(cnpj_admin=admin)
 
             
-            # Atualiza todos 
-            if not admin.get_email() and admin.get_nome() and admin.get_site() and admin.get_telefone():
-                oracle.write(f"UPDATE ADMINISTRADORES SET NOME='{admin.get_nome()}',TELEFONE='{admin.get_telefone()}',EMAIL='{admin.get_email()}',URL_TELEFONE='{admin.get_site}' WHERE CNPJ ='{admin.get_cnpj()}'")
-            # Atualiza menos Email 
-            elif admin.get_email() =='' and admin.get_nome() !='' and admin.get_site() !='' and admin.get_telefone() !='':
-                oracle.write(f"UPDATE ADMINISTRADORES SET NOME='{admin.get_nome()}',TELEFONE='{admin.get_telefone()}',URL_TELEFONE='{admin.get_site}' WHERE CNPJ ='{admin.get_cnpj()}'")
-            # Atualiza menos Email e NOME
-            elif admin.get_email() =='' and admin.get_nome() =='' and admin.get_site() !='' and admin.get_telefone() !='':
-                oracle.write(f"UPDATE ADMINISTRADORES SET TELEFONE='{admin.get_telefone()}',URL_TELEFONE='{admin.get_site}' WHERE CNPJ ='{admin.get_cnpj()}'")
-            # Atualiza menos Email e NOME e SITE
-            elif admin.get_email() =='' and admin.get_nome() =='' and admin.get_site() =='' and admin.get_telefone() !='':
-                oracle.write(f"UPDATE ADMINISTRADORES SET TELEFONE='{admin.get_telefone()}' WHERE CNPJ ='{admin.get_cnpj()}'")
+            dict_div = obj_admin.__dict__
+            aux_dict = {}
+            query = (f"UPDATE ADMINISTRADORES SET ")
+
+            for inf in dict_div:
+                if dict_div[inf] !='' and inf != 'cnpj_admin':
+                    aux_dict.update({inf:dict_div[inf]})
+ 
+            if len(aux_dict) != 0:   
+                aux_cont = 1
+                aux = len(aux_dict)
+                
+                for i in aux_dict:
+                    if aux == 1: # Monta primeira possição somente um registro
+                        query += f""" {i} = '{aux_dict[i]}' """
+                    elif aux != 1 and  aux_cont <= (aux-1): # Monta primeira possição varios registro
+                        query += f"""{i} = '{aux_dict[i]}', """
+                        aux_cont += 1
+                    elif aux_cont == aux:
+                        query += f""" {i} = '{aux_dict[i]}' """ # Mota ultimo
+                        aux_cont += 1
+                                
+                query += f""" WHERE CNPJ_ADMIN ='{obj_admin.get_cnpj_admin()}'"""
+                oracle.write(query)
             
             # Recupera os dados do novo cliente criado transformando em um DataFrame
-            df_fundos = oracle.sqlToDataFrame(f"SELECT NOME, TELEFONE, EMAIL,URL_SITE, CNPJ FROM ADMINISTRADORES WHERE CNPJ = '{admin.get_cnpj()}'")
+            df_fundos = oracle.sqlToDataFrame(f"SELECT NOME, TELEFONE, EMAIL,URL_SITE, CNPJ_ADMIN FROM ADMINISTRADORES WHERE CNPJ_ADMIN = '{obj_admin.get_cnpj_admin()}'")
             # Cria um novo objeto cliente
             print(df_fundos.head())
             admin.__delattr__
@@ -131,24 +142,21 @@ class Controller_Admin():
         else:
             print("Não foi encontrado registro desse administrador")
                                
-    def cadastrar_admin(self, Cnpj_admin:str='') -> Administradores:
+    def cadastrar_admin(self, cnpj_admin:str='') -> Administradores:
         
         admin = Administradores()
 
-        if Cnpj_admin == '' or not Cnpj_admin.isnumeric():
-            
-            sleep(1) #ms
-            cnpj = input("cnpj (Novo): ")
-            while not admin.isnumeric() or len(admin) > 14 or len(admin) <= 13:
-                cnpj = input("cnpj (Novo): ")
-            admin.set_cnpj(cnpj)
-        elif not Cnpj_admin:
-            admin.set_cnpj(cnpj=Cnpj_admin)
+        if cnpj_admin == '' or not cnpj_admin.isnumeric():
         
+            cnpj_admin = input("cnpj (Novo): ")
+            while not cnpj_admin.isnumeric() or len(cnpj_admin) > 14 or len(cnpj_admin) <= 13:
+                cnpj_admin = input("cnpj (Novo): ")
+                
+        admin.set_cnpj(cnpj_admin=cnpj_admin)
         admin.set_nome(nome = input("nome (Novo): "))
         admin.set_telefone(telefone = input("Telefone (Novo): "))
         admin.set_email(email = input("E-mail (Novo): "))
-        admin.set_site(site = input("Site (Novo): "))
+        admin.set_site(url_site = input("Site (Novo): "))
         
         return admin 
     
