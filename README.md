@@ -28,7 +28,8 @@ service_name = XEPDB1
 user = labdatabase
 password = labDatabase2022
 ```
-
+## [Link do Video](https://youtu.be/IJTu1JIWS0o)
+    Esplicando sobre codigo 
 ## Uso
 
 Para usar o projeto, execute o seguinte comando:
