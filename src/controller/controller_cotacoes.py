@@ -103,12 +103,12 @@ class Controller_Cotacoes():
             ticker = input("informe o ticker do fundo: ")
             mes = input("informe mês: ")
         
-        df_cota = oracle.sqlToDataFrame(f"select ID, TICKER, MES COTACOES FROM WHERE MES ='{mes}' AND TICKER='{ticker}'")
+        df_cota = oracle.sqlToDataFrame(f"""select ID, TICKER, MES FROM COTACOES WHERE MES ='{mes}' AND TICKER='{ticker}'""")
 
         if not df_cota.empty:
 
             #Inserir o cadastro do Fundo
-            oracle.write(f"DELETE FROM COTACOES WHERE TICKER ='{ticker}' AND ID= '{df_cota.id.values[0]}'")
+            oracle.write(f"""DELETE FROM COTACOES WHERE TICKER ='{ticker}' AND ID= '{df_cota.id.values[0]}'""")
 
         return
     

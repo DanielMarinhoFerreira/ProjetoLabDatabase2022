@@ -68,4 +68,6 @@ WITH DATA_DIVIDENDOS AS (
     )
     SELECT * FROM DATA_DIVIDENDOS;
 
-    commit
+    commit;  
+    
+

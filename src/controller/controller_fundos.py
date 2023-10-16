@@ -107,7 +107,7 @@ class Controller_Fundos:
         # Verifica se o fundo existe na base de dados
         if not self.verifica_existencia(oracle, ticker, tabela='FUNDOS',coluna=['ticker', 'ticker']):            
             # Recupera os dados do fundo transformando em um DataFrame
-            df_fundo = oracle.sqlToDataFrame(f"SELECT TOCKER, CNPJ_ADMIN FROM FUNDOS WHERE TICKER ='{ticker}'")
+            df_fundo = oracle.sqlToDataFrame(f"SELECT TICKER, CNPJ_ADMIN FROM FUNDOS WHERE TICKER ='{ticker}'")
             # Verificar se existe registro desse fundos na tabela cotações e dividendos
             if not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='COTACOES',coluna=['ticker', 'id']) and not self.verifica_existencia(oracle, df_fundo.ticker.values[0], tabela='DIVIDENDOS',coluna=['ticker', 'id']):
                 if "S" == input(f"Tem certezar que deseja excluir registro das cotações e dividandos desse fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
@@ -128,7 +128,7 @@ class Controller_Fundos:
             else:
                 # Se não existir dados nas tabela  COTACOES e DIVIDENDOS o sistema vai perguntar se deseja exluir esse fundo.
                 if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
-                    oracle.write(f"delete from FUNDOS WHERE TICKER ='{cota.id.values()}'")
+                    oracle.write(f"delete from FUNDOS WHERE TICKER ='{df_fundo.id.values[0]}'")
                 else: 
                     print("Não relaizar processo de exclução")
         else: 

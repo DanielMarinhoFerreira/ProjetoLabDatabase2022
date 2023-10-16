@@ -24,11 +24,11 @@ class Controller_Admin():
         if self.verifica_existencia(oracle, valor=admin, tabela='ADMINISTRADORES',coluna=['CNPJ_ADMIN', 'CNPJ_ADMIN']): #Verificar se exista no banco na tabela fondos 
             
             # solicita o restante do cadastro 
-            admin = self.cadastrar_admin(Cnpj_admin=admin)
+            admin = self.cadastrar_admin(cnpj_admin=admin)
             # Inserir o cadastro do Fundo
             oracle.write(admin.get_insert_admin())  
             # Recupera os dados do novo ticker criado transformando em um DataFrame
-            df_admin = oracle.sqlToDataFrame(f"select CNPJ_ADMIN, NOME from ADMINISTRADORES where CNPJ_ADMIN = '{admin.get_cnpj()}'")
+            df_admin = oracle.sqlToDataFrame(f"select CNPJ_ADMIN, NOME from ADMINISTRADORES where CNPJ_ADMIN = '{admin.get_cnpj_admin()}'")
             print("administrador do CNPJ: "+ str(df_admin.cnpj_admin.values[0]) +" : "+ df_admin.nome.values[0] +" Cadastrdo !")  
         else:
             print(f"Existe Administrador cadastrado com esse CNPJ {admin}")
