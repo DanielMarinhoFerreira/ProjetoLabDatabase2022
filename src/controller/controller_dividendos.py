@@ -12,12 +12,14 @@ class Controller_Dividendos():
         oracle = OracleQueries(can_write=True)
         oracle.connect()
 
-        # Solicita ao usuário o código do fundo a ser alterado
+        ## Solicita ao usuário o código do fundo a ser alterado
         div_ticker = input("informe o ticker do fundo: ")
-        while self.verifica_existencia(oracle, valor=div_ticker, tabela='DIVIDENDOS', coluna=['TICKER','TICKER']):
+        data_pag = input("Informe Data pagamento (Novo): ")
+        while not self.verifica_existencia(oracle, valor=[div_ticker,data_pag], tabela='DIVIDENDOS', coluna=['ID','TICKER','DATA_PAG']):
             div_ticker = input("informe o ticker do fundo: ")
+            data_pag = input("Informe Data pagamento (Novo): ")
 
-        divid = self.cadastrar_dividendos(ticker=div_ticker)
+        divid = self.cadastrar_dividendos(ticker=div_ticker, data_pag=data_pag)
         
         if self.verifica_existencia(oracle, valor=[divid.get_ticker(),divid.get_data_pag()], tabela='DIVIDENDOS', coluna=['ID','TICKER','DATA_PAG']):
             #Inserir o cadastro do Fundo
@@ -74,7 +76,7 @@ class Controller_Dividendos():
 
             df_div = oracle.sqlToDataFrame(f"""SELECT TICKER, DATA_PAG, COTA_BASE, ULT_DIVID, RENDIMENTO, DIV_YIELD FROM DIVIDENDOS  WHERE TICKER = '{atual_div.get_ticker()}' AND DATA_PAG ='{atual_div.get_data_pag()}'""")
             print("Atualizado!")
-            df_div.head()
+            print(df_div.head())
         else:
             print("Não foi Informado registro para alteração")
         return
@@ -98,6 +100,7 @@ class Controller_Dividendos():
         if not df_div.empty:
             query = f""" DELETE FROM DIVIDENDOS WHERE TICKER = '{df_div.ticker.values[0]}' AND DATA_PAG ='{df_div.data_pag.values[0]}' AND ID='{df_div.id.values[0]}'"""
             oracle.write(query)
+            print("deletado com sucesso !")
         else:
             print("Registro informado Não encontrado")
         return
@@ -107,7 +110,7 @@ class Controller_Dividendos():
         dividendo = Dividendos()
         
         while ticker == '' or data_pag =='':
-            ticker = input("Fundos (Novo): ")
+            ticker = input("informe o ticker do fundo: (Novo): ")
             data_pag = input("Informe Data pagamento (Novo): ")
 
         dividendo.set_ticker(ticker=ticker)

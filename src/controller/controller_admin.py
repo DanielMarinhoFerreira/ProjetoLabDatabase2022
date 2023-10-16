@@ -86,8 +86,7 @@ class Controller_Admin():
             admin.__delattr__
         else:
             print(f"O Cnpj {admin._cnpj} do Administrador informado não existe.")
-            return None
-        return   
+            return None 
     
     
     def deletar_admin(self):

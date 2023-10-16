@@ -128,7 +128,7 @@ class Controller_Fundos:
             else:
                 # Se não existir dados nas tabela  COTACOES e DIVIDENDOS o sistema vai perguntar se deseja exluir esse fundo.
                 if "S" == input(f"Tem certezar que deseja excluir fundo: {df_fundo.ticker.values[0]} ? S OU N").upper():
-                    oracle.write(f"delete from FUNDOS WHERE TICKER ='{df_fundo.id.values[0]}'")
+                    oracle.write(f"delete from FUNDOS WHERE TICKER ='{df_fundo.ticker.values[0]}'")
                 else: 
                     print("Não relaizar processo de exclução")
         else: 
