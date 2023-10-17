@@ -28,7 +28,7 @@ service_name = XEPDB1
 user = labdatabase
 password = labDatabase2022
 ```
-## [Link do Video motrando Codigo](https://youtu.be/IJTu1JIWS0o)
+## [Link do Video mostrando Codigo](https://youtu.be/IJTu1JIWS0o)
     Esplicando sobre codigo 
 
 ## [Link do Video executando sistema](https://youtu.be/wFKGATGkOS8)
